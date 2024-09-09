@@ -1,6 +1,7 @@
 # LAB.  ORGANIZACION DE LENGUAJES Y COMPILADORES 1 Sección C
 ## PROYECTO 2
 ### SEGUNDO SEMESTRE 2024
+
 ```js
 
 ╔═══════════════════════════════════════════╗
