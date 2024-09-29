@@ -7,6 +7,7 @@ import '../Styles/NavBar.css'
 function Index() {
     const [value, setValue] = React.useState("");
     const [response, setResponse] = React.useState("");
+    const [fileName, setFileName] = React.useState("archivo.ci");
 
     const changeText = (text) => {
         setValue(text);
@@ -45,8 +46,23 @@ function Index() {
         reader.onload = (e) => {
             const text = e.target.result;
             setValue(text);
+            setFileName(file.name); // Actualizar el nombre del archivo
         }
         reader.readAsText(file);
+    }
+
+    const handleNewFileClick = () => {
+        changeText("");
+        setResponse("");
+        setFileName("archivo.ci"); // Restablecer el nombre del archivo
+    }
+
+    const handleSaveClick = () => {
+        const blob = new Blob([value], { type: "text/plain;charset=utf-8" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = fileName; // Usar el nombre del archivo cargado
+        link.click();
     }
 
     return (
@@ -54,31 +70,42 @@ function Index() {
             <div className="item-0">
                 <div className="container-NavB">
                     <div className="item-1-NavB">
-                        <button className="button-74" role="button" onClick={handleLoadClick}>Abrir Archivo</button>
+                        <div className="dropdown">
+                            <button className="button-74" role="button">Archivo</button>
+                            <div className="dropdown-content">
+                                <button className="button-75" role="button" onClick={handleNewFileClick}>Nuevo archivo</button>
+                                <button className="button-75" role="button" onClick={handleLoadClick}>Abrir archivos</button>
+                                <button className="button-75" role="button" onClick={handleSaveClick}>Guardar</button>
+                            </div>
+                        </div>
                     </div>
                     <div className="item-2-NavB">
                         <button className="button-74" role="button" onClick={handlerClick}>Ejecutar</button>
                     </div>
                     <div className="item-3-NavB">
-                        <button className="button-74" role="button" onClick={handleLoadClick}>Reportes</button>
+                        <div className="dropdown">
+                            <button className="button-74" role="button">Reportes</button>
+                            <div className="dropdown-content">
+                                <button className="button-75" role="button" onClick={handleNewFileClick}>Errores</button>
+                                <button className="button-75" role="button" onClick={handleSaveClick}>Símbolos</button>
+                                <button className="button-75" role="button" onClick={handleLoadClick}>AST</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         
             <h1>Proyecto 2 - OLC1 - 202202481</h1>
             
-            <div class="container">
-                <button type="button" class="btn btn-primary" onClick={handlerLimpiar}>Limpiar</button>
+            <div className="container">
+                <button type="button" className="btn btn-primary" onClick={handlerLimpiar}>Limpiar</button>
             </div>
 
-            <div class="Consola">
-            <Consola text={"Consola de Entrada"} handlerChange={changeText} value={value} />
-
-            <Consola text={"Consola de Salida"} handlerChange={changeText} value={response} readOnly />
+            <div className="Consola">
+                <Consola text={"Entrada"} handlerChange={changeText} value={value} />
+                <Consola text={"Consola"} handlerChange={changeText} value={response} readOnly />
             </div>
-
         </>
-
     )
 }
 
