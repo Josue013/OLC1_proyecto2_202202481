@@ -20,8 +20,13 @@ function Index() {
         }
         Service.analisis(value)
             .then((response) => {
-                setResponse(response);
+                console.log("Respuesta recibida:", response);
+                setResponse(response.mensaje); 
             })
+            .catch((error) => {
+                console.error("Error al analizar:", error);
+                alert("Ocurrió un error al analizar el archivo.");
+            });
     }
 
     const handlerLimpiar = () => {
@@ -55,6 +60,7 @@ function Index() {
         changeText("");
         setResponse("");
         setFileName("archivo.ci"); // Restablecer el nombre del archivo
+
     }
 
     const handleSaveClick = () => {
@@ -103,7 +109,7 @@ function Index() {
 
             <div className="Consola">
                 <Consola text={"Entrada"} handlerChange={changeText} value={value} />
-                <Consola text={"Consola"} handlerChange={changeText} value={response} readOnly />
+                <Consola text={"Consola"} handlerChange={setResponse} value={response} readOnly />
             </div>
         </>
     )
