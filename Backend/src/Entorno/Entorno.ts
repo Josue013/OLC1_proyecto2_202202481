@@ -10,8 +10,8 @@ export class Entorno {
         this.variables = new Map<string, Simbolo>();
     }
 
-    guardarVariable(id:string,valor:Resultado,tipoDato:TipoDato,linea:number,columna:number){
-        const simbolo = new Simbolo(id,valor,tipoDato,linea,columna)
+    guardarVariable(id:string, valor:Resultado, tipoDato:TipoDato, esConstante: boolean, linea:number,columna:number){
+        const simbolo = new Simbolo(id,valor,tipoDato,esConstante,linea,columna)
         if (this.variables.has(id))
             throw Error("Esta variable ya existe")
         this.variables.set(id,simbolo)

@@ -2,10 +2,19 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Simbolo = void 0;
 class Simbolo {
-    constructor(id, valor, tipoDato, linea, columna) {
+    constructor(id, valor, tipoDato, esConstante, linea, columna) {
         this.id = id;
         this.valor = valor;
         this.tipoDato = tipoDato;
+        this.esConstante = esConstante;
+        this.linea = linea;
+        this.columna = columna;
+        this.id = id;
+        this.valor = valor;
+        this.tipoDato = tipoDato;
+        this.linea = linea;
+        this.columna = columna;
+        this.esConstante = esConstante;
     }
     getValor() {
         return this.valor;

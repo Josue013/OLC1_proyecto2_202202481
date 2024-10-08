@@ -7,13 +7,15 @@ export class Declaracion extends Instruccion {
     private tipoDato: string;
     private ids: string[];
     private exp: Expresion | null;
+    private esConstante: boolean;
 
-    constructor(tipoDato: string, ids: string | string[], exp: Expresion | null, linea: number, columna: number) {
+    constructor(tipoDato: string, ids: string | string[], exp: Expresion | null, esConstante: boolean, linea: number, columna: number) {
         super(linea, columna);
         this.tipoDato = tipoDato;
         // Asegurarse de que ids sea un array
         this.ids = Array.isArray(ids) ? ids : [ids];
         this.exp = exp;
+        this.esConstante = esConstante;
     }
 
     public ejecutar(entorno: Entorno) {
@@ -55,12 +57,12 @@ export class Declaracion extends Instruccion {
             }
             // Guardar cada variable con el valor de la expresión
             this.ids.forEach(id => {
-                entorno.guardarVariable(id, expResultado, tipo, this.linea, this.columna);
+                entorno.guardarVariable(id, expResultado, tipo, this.esConstante ,this.linea, this.columna);
             });
         } else {
             // Guardar cada variable con el valor predeterminado
             this.ids.forEach(id => {
-                entorno.guardarVariable(id, { valor: valorPredeterminado, tipoDato: tipo }, tipo, this.linea, this.columna);
+                entorno.guardarVariable(id, { valor: valorPredeterminado, tipoDato: tipo }, tipo,this.esConstante, this.linea, this.columna);
             });
         }
     }

@@ -7,8 +7,8 @@ class Entorno {
         this.entornoPadre = entornoPadre;
         this.variables = new Map();
     }
-    guardarVariable(id, valor, tipoDato, linea, columna) {
-        const simbolo = new Simbolo_1.Simbolo(id, valor, tipoDato, linea, columna);
+    guardarVariable(id, valor, tipoDato, esConstante, linea, columna) {
+        const simbolo = new Simbolo_1.Simbolo(id, valor, tipoDato, esConstante, linea, columna);
         if (this.variables.has(id))
             throw Error("Esta variable ya existe");
         this.variables.set(id, simbolo);

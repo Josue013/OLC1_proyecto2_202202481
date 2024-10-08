@@ -12,6 +12,7 @@
     const { Asignacion } = require("../dist/src/Instrucciones/Asignacion");
     const { Fn_if } = require("../dist/src/Instrucciones/Control/If");
     const { Bloque } = require("../dist/src/Instrucciones/Bloque");
+    const { Casteo } = require("../dist/src/Expresiones/Casteo");
 
 %}
 
@@ -43,6 +44,13 @@
 
 // Let  
 "let"                  return 'LET';
+
+// const
+"const"                return 'CONST';
+
+// casteo
+"cast"                 return 'CAST';
+"as"                   return 'AS';
 
 // Aritmeticos
 "++"                    return 'INCREMENTO';
@@ -155,6 +163,7 @@ expresion
          | tipo_datos                           { $$ = $1;} 
          | ID                                   { $$ = new Acceso($1,@1.first_line,@1.first_column)} 
          | PIZQ expresion PDER                  { $$ = $2}
+         | casteos                              { $$ = $1;}
 ;
 
 relacional : expresion IGUALDAD expresion       { $$ = new Relacional($1,$3,OperadorRelacional.IGUALDAD,0,0);}
@@ -194,7 +203,8 @@ Variables
 ;
 
 declaracion
-    : LET lista_var DOSPUNTOS TIPO var_exp     { $$ = new Declaracion($4,$2,$5,@1.first_line,@1.first_column);}
+    : LET lista_var DOSPUNTOS TIPO var_exp     { $$ = new Declaracion($4,$2,$5,false,@1.first_line,@1.first_column);}
+    | CONST lista_var DOSPUNTOS TIPO var_exp     { $$ = new Declaracion($4,$2,$5,true,@1.first_line,@1.first_column);}
 ;
 
 var_exp 
@@ -209,6 +219,13 @@ lista_var
 
 asignacion_var
     : ID IGUAL expresion            {$$ = new Asignacion($1,$3,@1.first_line,@1.first_column);}               
+;
+
+
+// ================ Casteos ===================
+
+casteos
+    : CAST PIZQ expresion AS TIPO PDER     { $$ = new Casteo($5,$3,@1.first_line,@1.first_column);}
 ;
 
 // ================ Funciones ===================

@@ -1,7 +1,16 @@
 import { Resultado, TipoDato } from "../Expresiones/Tipos";
 
 export class Simbolo {
-    constructor(private id: string, private valor: any, public tipoDato: TipoDato, linea: number, columna: number) {}
+    
+
+    constructor(private id: string, private valor: any, public tipoDato: TipoDato, public esConstante: boolean, public linea: number, public columna: number) {
+        this.id = id;
+        this.valor = valor;
+        this.tipoDato = tipoDato;
+        this.linea = linea;
+        this.columna = columna;
+        this.esConstante = esConstante;
+    }
 
     public getValor(): any {
         return this.valor;

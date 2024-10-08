@@ -1,7 +1,7 @@
 import { Entorno } from "../Entorno/Entorno";
 import { Resultado } from "./Tipos";
 
-export abstract class  Expresion{
+export abstract class  Expresion {
     private linea:number;
     private columna:number;
 

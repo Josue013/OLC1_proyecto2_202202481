@@ -4,12 +4,13 @@ exports.Declaracion = void 0;
 const Tipos_1 = require("../Expresiones/Tipos");
 const Instruccion_1 = require("./Instruccion");
 class Declaracion extends Instruccion_1.Instruccion {
-    constructor(tipoDato, ids, exp, linea, columna) {
+    constructor(tipoDato, ids, exp, esConstante, linea, columna) {
         super(linea, columna);
         this.tipoDato = tipoDato;
         // Asegurarse de que ids sea un array
         this.ids = Array.isArray(ids) ? ids : [ids];
         this.exp = exp;
+        this.esConstante = esConstante;
     }
     ejecutar(entorno) {
         let tipo;
@@ -48,13 +49,13 @@ class Declaracion extends Instruccion_1.Instruccion {
             }
             // Guardar cada variable con el valor de la expresión
             this.ids.forEach(id => {
-                entorno.guardarVariable(id, expResultado, tipo, this.linea, this.columna);
+                entorno.guardarVariable(id, expResultado, tipo, this.esConstante, this.linea, this.columna);
             });
         }
         else {
             // Guardar cada variable con el valor predeterminado
             this.ids.forEach(id => {
-                entorno.guardarVariable(id, { valor: valorPredeterminado, tipoDato: tipo }, tipo, this.linea, this.columna);
+                entorno.guardarVariable(id, { valor: valorPredeterminado, tipoDato: tipo }, tipo, this.esConstante, this.linea, this.columna);
             });
         }
     }
