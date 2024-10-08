@@ -1,0 +1,31 @@
+let esMayor: bool;
+let x: int = 5;
+let y: int = 3;
+
+// Uso de operadores relacionales y lógicos
+esMayor = x > y && x != 0;
+
+// Condicionales con IF
+if (esMayor) {
+echo "X es mayor que Y y no es cero";
+} else {
+echo "X no es mayor que Y o es cero";
+};
+
+let bandera: bool = true;
+
+echo bandera;
+echo esMayor;
+
+
+if (bandera == true) {
+    echo "bandera es verdadero";
+} else {
+    echo "bandera es falso";
+};
+
+if (bandera == true && esMayor == true) {
+    echo "bandera y esMayor son verdaderos";
+} else {
+    echo "Alguna de las 2 es falsa";
+};

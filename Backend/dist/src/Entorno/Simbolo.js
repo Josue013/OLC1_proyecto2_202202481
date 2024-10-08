@@ -11,9 +11,17 @@ class Simbolo {
         return this.valor;
     }
     setValor(v) {
-        if (v.tipoDato != this.tipoDato)
-            throw Error("Verificar tipos de dato en la asignación de: " + this.id);
+        if (v.tipoDato !== this.tipoDato) {
+            throw new Error("Verificar tipos de dato en la asignación de: " + this.id);
+        }
+        console.log(`Asignando valor ${v.valor} a la variable ${this.id}`);
         this.valor = v.valor;
+    }
+    actualizarValor(valor) {
+        this.valor = valor;
+    }
+    obtenertipoDato() {
+        return this.tipoDato;
     }
 }
 exports.Simbolo = Simbolo;

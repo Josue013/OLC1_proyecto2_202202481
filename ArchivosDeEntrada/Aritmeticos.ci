@@ -1,0 +1,29 @@
+// Aritmeticos
+
+// suma 3+8=11
+echo "SUMA: 3+8=11";
+echo 3+8;
+
+// resta 10-5=5
+echo "RESTA: 10-5=5";
+echo 10-5;
+
+// multiplicacion 6*6=36
+echo "MULTIPLICACION: 6*6=36";
+echo 6*6;
+
+// divisison 9/3=3
+echo "DIVISION: 9/3=3";
+echo 9/3;
+
+// potencia 2^2=4
+echo "POTENCIA: 2^2=4";
+echo 2^2;
+
+// raiz 25$2=5
+echo "RAIZ: 25$2=5";
+echo 25$2;
+
+// modulo 2%2=0
+echo "MODUDLO: 2%2=0";
+echo 2%2;

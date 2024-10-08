@@ -9,6 +9,9 @@
     const { Acceso  } = require("../dist/src/Expresiones/Acceso");
     const { Echo } = require("../dist/src/Instrucciones/Echo");
     const { Declaracion } = require("../dist/src/Instrucciones/Declaracion");
+    const { Asignacion } = require("../dist/src/Instrucciones/Asignacion");
+    const { Fn_if } = require("../dist/src/Instrucciones/Control/If");
+    const { Bloque } = require("../dist/src/Instrucciones/Bloque");
 
 %}
 
@@ -34,7 +37,11 @@
 // Funcion echo
 "echo"                 return 'ECHO';
 
-// Let
+// Funcion if
+"if"                   return 'IF';
+"else"                 return 'ELSE';
+
+// Let  
 "let"                  return 'LET';
 
 // Aritmeticos
@@ -47,15 +54,16 @@
 "^"                      return 'POTENCIA';
 "$"                     return 'RAIZ';
 "%"                     return 'MODULO';
-"="                     return 'IGUAL';
+
 
 // Relacional
 "=="                     return 'IGUALDAD';
 "!="                     return 'DISTINTO';
-"<"                      return 'MENOR';
 "<="                     return 'MENORIGUAL';
-">"                      return 'MAYOR';
 ">="                     return 'MAYORIGUAL';
+"<"                      return 'MENOR';
+">"                      return 'MAYOR';
+
 
 // Logicos
 "&&"                    return 'AND';
@@ -77,6 +85,7 @@
 ":"                     return 'DOSPUNTOS';
 "["                     return 'CIZQ';
 "]"                     return 'CDER';
+"="                     return 'IGUAL';
 
 
 // tipos de datos
@@ -126,14 +135,10 @@ instrucciones : instrucciones instruccion          {  $1.push($2); $$ = $1;}
 ;
 instruccion
             : funciones                         {$$ = $1;}
-            | declaracion PYC                   {$$ = $1;}
-            //| def_var PYC                       {$$ = $1;}
+            | Variables PYC                   {$$ = $1;}
 ;
 
-funciones 
-    : echo PYC                         {$$ = $1;}
 
-;
 // Retorno de valores con $$ 
 // Unario 
 expresion 
@@ -166,12 +171,10 @@ logicos
         | NOT expresion                        { $$= new Logico($2,null,OperadorLogico.NOT,@1.first_line,@1.first_column);}
 ;
 
-// Instrucciones
-echo
-    : ECHO expresion                 { $$ = new Echo($2,@1.first_line,@1.first_column);}
-;
+// ================ Instrucciones ================
 
-//Tipo de datos
+
+// ================ Tipo de datos ================
 tipo_datos 
     : NUMBER                          { $$ = new Basico($1,TipoDato.ENTERO,0,0);}
     | DOUBLE                          { $$ = new Basico($1,TipoDato.DECIMAL,0,0);}
@@ -183,9 +186,15 @@ tipo_datos
     
 ;
 
-//Variables
+// ================ Variables ===================
+
+Variables 
+    : declaracion                       { $$ = $1; }
+    | asignacion_var                    { $$ = $1; }
+;
+
 declaracion
-    : LET lista_var DOSPUNTOS TIPO var_exp     { $$ = new Declaracion($4,$2,$5,@1.first_line,@1.first_column)}
+    : LET lista_var DOSPUNTOS TIPO var_exp     { $$ = new Declaracion($4,$2,$5,@1.first_line,@1.first_column);}
 ;
 
 var_exp 
@@ -195,12 +204,36 @@ var_exp
 
 lista_var
     : lista_var COMA ID              { $$ = $1; $$.push($3);}
-    | ID                            { $$ = [$1];}
+    | ID                             { $$ = [$1];}
 ;
 
-//asignacion_var
-//    : ID IGUAL expresion              
-//;
+asignacion_var
+    : ID IGUAL expresion            {$$ = new Asignacion($1,$3,@1.first_line,@1.first_column);}               
+;
 
+// ================ Funciones ===================
+
+funciones 
+    : fn_echo PYC                         {$$ = $1;}
+    | fn_if PYC                           {$$ = $1;}
+;
+
+// ================ Funcion echo ===================
+
+fn_echo
+    : ECHO expresion                 { $$ = new Echo($2,@1.first_line,@1.first_column);}
+;
+
+// ================ Sentencia IF ===================
+
+fn_if
+    : IF PIZQ expresion PDER bloque                 { $$ = new Fn_if($3,$5,null,null); }
+    | IF PIZQ expresion PDER bloque ELSE bloque     { $$ = new Fn_if($3,$5,$7,null); }
+    | IF PIZQ expresion PDER bloque ELSE fn_if      { $$ = new Fn_if($3,$5,null,$7); }
+;
+
+bloque
+    : LLIZQ instrucciones LLDER                     { $$ = new Bloque($2,@1.first_line,@1.first_column); }
+;   
 
 

@@ -9,9 +9,12 @@ class Echo extends Instruccion_1.Instruccion {
         this.exp = exp;
     }
     ejecutar(entorno) {
+        console.log("");
+        console.log("======== Ejecutando echo ==========");
         const exp1 = this.exp.calcular(entorno);
         console.log(exp1);
         (0, AST_1.imprimir)(exp1.valor);
+        console.log("===================================");
     }
 }
 exports.Echo = Echo;

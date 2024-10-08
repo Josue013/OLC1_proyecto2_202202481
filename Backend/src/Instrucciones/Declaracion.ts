@@ -38,7 +38,7 @@ export class Declaracion extends Instruccion {
                 tipo = TipoDato.CHAR;
                 valorPredeterminado = '0';
                 break;
-            case "std::string":
+            case "string":
                 tipo = TipoDato.STRING;
                 valorPredeterminado = "";
                 break;

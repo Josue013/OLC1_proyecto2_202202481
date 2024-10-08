@@ -1,0 +1,80 @@
+// relacionales
+echo "=============================================";
+// Operador ==
+echo "Operador ==";
+echo "";
+echo "1==1 -> true";
+echo 1==1;
+
+echo "'hola' == 'hola' -> true";
+echo "hola" == "hola";
+
+echo "25.654 == 54.34 -> falso";
+
+echo 25.654 == 54.34;
+
+// operador !=
+echo "=============================================";
+echo "Operador !=";
+echo "";
+echo "1 != 2 -> true";
+echo 1 != 2;
+
+echo "var1(true) != var2(false) -> true";
+let var1: bool = true;
+let var2: bool = false;
+echo var1 != var2;
+
+echo "50 != 30 -> true";
+echo 50 != 30;
+
+echo "=============================================";
+
+// operador < 
+echo "Operador < ";
+echo "";
+echo "25.5 < 30 -> true";
+echo 25.5 < 30;
+
+echo "54 < 25 -> false";
+echo 54 < 25;
+
+echo "50 < 'F' -> false";
+echo 50 < 'F';
+echo "=============================================";
+// operador <=
+echo "Operador <=";
+echo "";
+echo "25.5 <= 30 -> true";
+echo 25.5 <= 30;
+
+echo "54 <= 25 -> false";
+echo 54 <= 25;
+
+echo "50 <= 'F' -> false";
+echo 50 <= 'F';
+echo "=============================================";
+// operador >
+echo "Operador >";
+echo "";
+echo "25.5 > 30 -> false";
+echo 25.5 > 30;
+
+echo "54 > 25 -> true";
+echo 54 > 25;
+
+echo "50 > 'F' -> false";
+echo 50 > 'F';
+echo "=============================================";
+// operador >=
+echo "Operador >=";
+echo "";
+echo "25.5 >= 30 -> false";
+echo 25.5 >= 30;
+
+echo "54 >= 25 -> true";
+echo 54 >= 25;
+
+echo "50 >= 'F' -> false";
+echo 50 >= 'F';
+echo "=============================================";

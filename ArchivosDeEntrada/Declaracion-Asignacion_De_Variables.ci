@@ -1,0 +1,19 @@
+// Declaramos una variable con id=id, tipo=int, expresion=2
+let id : int = 2;
+
+// Funcion echo para imprimir el valor de la variable
+echo "valor antes (2)";
+echo id;
+
+// Le asignamos un nuevo valor
+id= 3;
+
+// Funcion echo para imprimri el nuevo valor de la variable
+echo "";
+echo "valor despues (3)";
+echo id;
+
+// funcion echo para probar aritmetica con variables
+echo "";
+echo "valor(3) + 5 = 8";
+echo id+5;

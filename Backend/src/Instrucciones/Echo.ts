@@ -9,9 +9,12 @@ export class Echo extends Instruccion{
         super(linea,columna)
     }
 
-     public ejecutar(entorno:Entorno) {
+    public ejecutar(entorno:Entorno) {
+        console.log("")
+        console.log("======== Ejecutando echo ==========")
         const exp1 = this.exp.calcular(entorno);
         console.log(exp1)
         imprimir(exp1.valor)
-     }
+        console.log("===================================")
+    }
 }
