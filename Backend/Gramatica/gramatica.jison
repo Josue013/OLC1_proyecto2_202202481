@@ -99,8 +99,31 @@
 // tipos de datos
 [0-9]+("."[0-9]+)\b                 return 'DOUBLE';
 [0-9]+\b                            return 'NUMBER';
-\"[^\"]*\"				            { yytext = yytext.substr(1,yyleng-2); return 'STRING'; }
-\'([^\']|[\t]|[\n]|[\r]|[ ])\'      {yytext = yytext.substr(1,yyleng-2);return 'CHAR';}
+
+// agregando secuencias de escape
+\"([^\"]|[\t]|[\n]|[\r])*\" {
+    var texto = yytext.substr(1, yyleng - 2);
+    texto = texto.replace(/\\n/g, "\n");
+    texto = texto.replace(/\\\\/g, "\\");
+    texto = texto.replace(/\\"/g, "\"");
+    texto = texto.replace(/\\t/g, "\t");
+    texto = texto.replace(/\\'/g, "'");
+    yytext = texto;
+    return 'STRING';
+}
+
+// agregando secuencias de escape
+\'([^\']|[\t]|[\n]|[\r]|[ ])\' {
+    var texto = yytext.substr(1, yyleng - 2);
+    texto = texto.replace(/\\n/g, "\n");
+    texto = texto.replace(/\\\\/g, "\\");
+    texto = texto.replace(/\\"/g, "\"");
+    texto = texto.replace(/\\t/g, "\t");
+    texto = texto.replace(/\\'/g, "'");
+    yytext = texto;
+    return 'CHAR';
+}
+
 "true"                              return 'TRUE';
 "false"                             return 'FALSE';
 "int"|"double"|"bool"|"char"|"string"|NULL  {return 'TIPO';}
