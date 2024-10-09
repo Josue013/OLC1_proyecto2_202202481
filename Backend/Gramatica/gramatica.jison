@@ -13,7 +13,7 @@
     const { Fn_if } = require("../dist/src/Instrucciones/Control/If");
     const { Bloque } = require("../dist/src/Instrucciones/Bloque");
     const { Casteo } = require("../dist/src/Expresiones/Casteo");
-
+    const { Incremento_Decremento } = require("../dist/src/Instrucciones/Incremento_Decremento");
 %}
 
 
@@ -166,7 +166,8 @@ instrucciones : instrucciones instruccion          {  $1.push($2); $$ = $1;}
 ;
 instruccion
             : funciones                         {$$ = $1;}
-            | Variables PYC                   {$$ = $1;}
+            | Variables PYC                     {$$ = $1;}
+            | incremento_y_decremento PYC       {$$ = $1;}
 ;
 
 
@@ -249,6 +250,13 @@ asignacion_var
 
 casteos
     : CAST PIZQ expresion AS TIPO PDER     { $$ = new Casteo($5,$3,@1.first_line,@1.first_column);}
+;
+
+// ================ Incremento y Decremento ===================
+
+incremento_y_decremento
+    : ID INCREMENTO                        { $$ = new Incremento_Decremento($1,$2,@1.first_line,@1.first_column);}
+    | ID DECREMENTO                        { $$ = new Incremento_Decremento($1,$2,@1.first_line,@1.first_column);}
 ;
 
 // ================ Funciones ===================

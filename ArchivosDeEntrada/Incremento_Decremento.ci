@@ -1,0 +1,9 @@
+// Incremento y Decremento
+
+let edad:int = 18;
+
+edad++; // tiene el valor de 19
+echo edad;
+
+edad--; // tiene el valor de 18
+echo edad;
