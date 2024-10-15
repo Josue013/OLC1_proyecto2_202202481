@@ -10,7 +10,7 @@ if (esMayor) {
 echo "X es mayor que Y y no es cero";
 } else {
 echo "X no es mayor que Y o es cero";
-};
+}
 
 let bandera: bool = true;
 
@@ -22,10 +22,10 @@ if (bandera == true) {
     echo "bandera es verdadero";
 } else {
     echo "bandera es falso";
-};
+}
 
 if (bandera == true && esMayor == true) {
     echo "bandera y esMayor son verdaderos";
 } else {
     echo "Alguna de las 2 es falsa";
-};
+}

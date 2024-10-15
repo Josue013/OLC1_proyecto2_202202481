@@ -1,0 +1,21 @@
+//ejemplos
+let edad : int = 18;
+
+switch( edad ) {
+    Case 10:
+    // sentencias
+    echo "Usted tiene 10 años";
+    Break;
+    Case 18:
+    // sentencias
+    echo "Usted tiene 18 años";
+    Break;
+    Case 25:
+    // sentencias
+    echo "Usted tiene 25 años";
+    Break;
+    Default:
+    // sentencias
+    echo "Ni idea esto es default";
+    Break;
+}

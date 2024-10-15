@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Declaracion = void 0;
 const Tipos_1 = require("../Expresiones/Tipos");
 const Instruccion_1 = require("./Instruccion");
+const Errores_1 = require("../Error/Errores_");
+const Listas_1 = require("../Listas/Listas");
 class Declaracion extends Instruccion_1.Instruccion {
     constructor(tipoDato, ids, exp, esConstante, linea, columna) {
         super(linea, columna);
@@ -38,7 +40,7 @@ class Declaracion extends Instruccion_1.Instruccion {
                 valorPredeterminado = "";
                 break;
             default:
-                throw new Error(`Tipo ${this.tipoDato} no permitido para la declaración de variables`);
+                throw Listas_1.tablaError.push(new Errores_1.Error_(`${this.tipoDato}, no se permite en la declaración de variables`, this.linea, this.columna, Errores_1.TipoError.SEMANTICO));
         }
         // Si existe una expresión, calcular su valor
         if (this.exp != null) {

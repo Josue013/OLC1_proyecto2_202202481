@@ -2,6 +2,8 @@ import { Entorno } from "../Entorno/Entorno";
 import { Expresion } from "../Expresiones/Expresion";
 import { TipoDato, Resultado } from "../Expresiones/Tipos";
 import { Instruccion } from "./Instruccion";
+import { Error_, TipoError } from "../Error/Errores_";
+import { tablaError } from "../Listas/Listas";
 
 export class Declaracion extends Instruccion {
   private tipoDato: string;
@@ -45,7 +47,7 @@ export class Declaracion extends Instruccion {
         valorPredeterminado = "";
         break;
       default:
-        throw new Error(`Tipo ${this.tipoDato} no permitido para la declaración de variables`);
+        throw tablaError.push(new Error_(`${this.tipoDato}, no se permite en la declaración de variables`, this.linea, this.columna, TipoError.SEMANTICO));
     }
 
     // Si existe una expresión, calcular su valor

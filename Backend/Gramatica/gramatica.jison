@@ -22,6 +22,11 @@
     const { ModificarVector } = require("../dist/src/Instrucciones/ModificarVector");
     const { Vector2 } = require("../dist/src/Instrucciones/Vector2");
     const { Continue } = require("../dist/src/Instrucciones/Continue");
+    const { Return } = require("../dist/src/Instrucciones/Return");
+    const { Case } = require("../dist/src/Instrucciones/Control/Case");
+    const { Default } = require("../dist/src/Instrucciones/Control/Default");
+    const { Switch } = require("../dist/src/Instrucciones/Control/Switch");
+
 %}
 
 
@@ -49,6 +54,11 @@
 // Funcion if
 "if"                   return 'IF';
 "else"                 return 'ELSE';
+
+// Sentencia Switch
+"Switch"               return 'SWITCH';
+"case"                 return 'CASE';
+"default"              return 'DEFAULT';
 
 // while
 "while"                return 'WHILE';
@@ -345,7 +355,8 @@ modificar_vector
 
 funciones 
     : fn_echo PYC                         {$$ = $1;}
-    | fn_if PYC                           {$$ = $1;}
+    | fn_if                            {$$ = $1;}
+    | Switch                              {$$ = $1;}
     | ciclo_while PYC                     {$$ = $1;}
 ;
 
@@ -367,7 +378,30 @@ bloque
     : LLIZQ instrucciones LLDER                     { $$ = new Bloque($2,@1.first_line,@1.first_column); }
 ;   
 
+// ================ Sentencia Switch ===================
 
+Switch
+    : SWITCH PIZQ expresion PDER LLIZQ case default LLDER { $$ = new Switch($3,$6,$7,@1.first_line,@1.first_column); }
+;
+
+case
+    : lista_casos      { $$ = $1; }
+    |                  { $$ = null; }
+;
+
+lista_casos
+    : lista_casos casos                    { $1.push($2); $$ = $1;}
+    | casos                               { $$ = [$1];}
+;
+
+casos 
+    : CASE expresion DOSPUNTOS instrucciones         { $$ = new Case($2,$4,@1.first_line,@1.first_column); }
+;
+
+default
+    : DEFAULT DOSPUNTOS instrucciones                     { $$ = new Default($3,@1.first_line,@1.first_column); }
+    |                                                     { $$ = null; }                                                    
+;
 
 // ================ Ciclo While ===================
 
