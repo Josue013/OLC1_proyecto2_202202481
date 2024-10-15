@@ -2,12 +2,12 @@ import { Entorno } from "../Entorno/Entorno";
 import { Resultado } from "./Tipos";
 
 export abstract class  Expresion {
-    private linea:number;
-    private columna:number;
+    public linea: number;
+    public columna: number;
 
     constructor(linea:number,columna:number){
-        this.columna = columna
-        this.linea = linea 
+        this.linea = linea; 
+        this.columna = columna;
     }
 
     public abstract calcular(entorno:Entorno):Resultado;

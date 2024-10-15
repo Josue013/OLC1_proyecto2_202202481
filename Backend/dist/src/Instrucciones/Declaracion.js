@@ -43,13 +43,14 @@ class Declaracion extends Instruccion_1.Instruccion {
         // Si existe una expresión, calcular su valor
         if (this.exp != null) {
             const expResultado = this.exp.calcular(entorno);
+            const valor = this.exp.calcular(entorno);
             // Validar que el tipo de la expresión coincida con el tipo dominante
-            if (tipo != expResultado.tipoDato) {
-                throw new Error(`Tipo ${expResultado.tipoDato} no asignable a ${tipo}`);
+            if (tipo != valor.tipoDato) {
+                throw new Error(`Tipo ${valor.tipoDato} no asignable a ${tipo}`);
             }
             // Guardar cada variable con el valor de la expresión
             this.ids.forEach(id => {
-                entorno.guardarVariable(id, expResultado, tipo, this.esConstante, this.linea, this.columna);
+                entorno.guardarVariable(id, valor, tipo, this.esConstante, this.linea, this.columna);
             });
         }
         else {

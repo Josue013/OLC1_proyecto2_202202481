@@ -8,10 +8,17 @@ class Acceso extends Expresion_1.Expresion {
         this.id = id;
     }
     calcular(entorno) {
-        const variable = entorno.obtenerVariable(this.id);
-        if (variable)
-            return { valor: variable.getValor().valor, tipoDato: variable.tipoDato };
-        throw Error("La variable no existe");
+        // VARIABLES
+        const value = entorno.obtenerVariable(this.id);
+        if (value != null) {
+            return { valor: value.getValor().valor, tipoDato: value.tipoDato };
+        }
+        // VECTORES
+        const vector = entorno.obtenerArreglo(this.id);
+        if (vector != null) {
+            return { valor: vector.id, tipoDato: vector.tipo };
+        }
+        throw new Error(`La variable o vector ${this.id} no existe`);
     }
 }
 exports.Acceso = Acceso;

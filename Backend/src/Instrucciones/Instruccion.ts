@@ -9,5 +9,5 @@ export abstract class  Instruccion{
         this.linea = linea 
     }
 
-    public abstract ejecutar(entorno:Entorno): any;
+    public abstract ejecutar(entorno:Entorno): any | null;
 }

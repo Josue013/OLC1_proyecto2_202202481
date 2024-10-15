@@ -1,0 +1,135 @@
+// Pruba 1
+echo "===============================================================";
+echo "                            PRUEBA 1                           ";
+echo "===============================================================\n";
+
+let x: int = 5;
+let y: int = 20;
+
+echo "Valores iniciales";
+echo x;
+echo y;
+
+echo "\n========== Iniciando ciclo while ==========";
+while (x < 10) {
+    x++;
+    y--;
+    echo "\nValor de x:";
+    echo x;
+    echo "Valor de y:";
+    echo y;
+};
+
+echo "\n========== Ciclo while terminado ========== \n";
+echo "Valor final de x:";
+echo x; // 10
+echo "Valor final de y:";
+echo y; // 15
+
+
+// Prueba 2
+echo "\n===============================================================";
+echo "                            PRUEBA 2                           ";
+echo "===============================================================\n";
+
+let bandera: bool = true;
+let contador: int = 0;
+
+echo "======== Iniciando ciclo while ========";
+while (bandera) {
+    contador++;
+    echo "Contador:";
+    echo contador;
+    
+    if (contador >= 5) {
+        bandera = false;
+    };
+};
+
+echo "======== Ciclo while terminado ========\n";
+echo "Valor final del contador:";
+echo contador;
+echo "Bandera ahora es:";
+echo bandera;
+
+// Prueba 3
+echo "\n===============================================================";
+echo "                            PRUEBA 3                           ";
+echo "===============================================================\n";
+
+let a: int = 1;
+let b: int = 100;
+let bandera2: bool = true;
+let resultado2: int = 0;
+
+echo "Valores iniciales";
+echo "a:";
+echo a;
+echo "b:";
+echo b;
+
+echo "\n======== Iniciando ciclo while ========";
+
+while (a < 20 && bandera2) {
+    a = a+2;
+    b = b-5;
+    resultado2 = a * b;
+    
+    echo "Iteracion del ciclo:";
+    echo "Valor de a:";
+    echo a;
+    echo "Valor de b:";
+    echo b;
+    echo "Resultado (a * b):";
+    echo resultado2;
+    
+    // Condición para cambiar la bandera y salir del ciclo si cierto valor es alcanzado
+    if (resultado2 < 50 || b < 50) {
+        bandera2 = false;
+    };
+};
+
+echo "======== Ciclo while terminado ========\n";
+echo "Valor final de x:";
+echo a;
+echo "Valor final de b:";
+echo b;
+echo "Resultado final:";
+echo resultado2;
+echo "Bandera ahora es:";
+echo bandera2;
+
+
+// Prueba 4 con break y continue
+echo "\n===============================================================";
+echo "                            PRUEBA 4                           ";
+echo "===============================================================\n";
+
+let bandera3: bool = true;
+let contador2: int = 0;
+
+echo "======== Iniciando ciclo while con 'continue' y 'break' ========";
+while (bandera3) {
+    contador2++;
+    
+    // Usar 'continue' para saltar una iteración si el contador es impar
+    if (contador2 % 2 != 0) {
+        echo "Número impar, saltando la iteración con 'continue'.";
+        continue;
+    };
+    
+    echo "Contador (número par):";
+    echo contador2;
+    
+    // Usar 'break' cuando el contador alcanza 10
+    if (contador2 >= 10) {
+        echo "Contador alcanzó 10, saliendo del ciclo con 'break'.";
+        break;
+    };
+};
+
+echo "======== Ciclo while terminado ========\n";
+echo "Valor final del contador:";
+echo contador2;
+echo "Bandera ahora es:";
+echo bandera3;

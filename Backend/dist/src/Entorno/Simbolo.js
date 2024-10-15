@@ -6,12 +6,6 @@ class Simbolo {
         this.id = id;
         this.valor = valor;
         this.tipoDato = tipoDato;
-        this.esConstante = esConstante;
-        this.linea = linea;
-        this.columna = columna;
-        this.id = id;
-        this.valor = valor;
-        this.tipoDato = tipoDato;
         this.linea = linea;
         this.columna = columna;
         this.esConstante = esConstante;

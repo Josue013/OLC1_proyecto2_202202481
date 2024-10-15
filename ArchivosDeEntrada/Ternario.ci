@@ -1,0 +1,56 @@
+// Operador ternario con variables sencillas
+let temperatura: int = 30;
+let estadoClima: string = if (temperatura > 25) "Caluroso" : "Fresco";
+echo "El estado del clima es:";
+echo estadoClima+"\n";
+
+const nivelAgua: int = 5;
+const mensajeAlerta: string = if (nivelAgua < 10) "Alerta: Nivel bajo" : "Alerta: Nivel normal";
+echo mensajeAlerta+"\n";
+
+// Operación más compleja con cálculos y el operador ternario
+let a: int = 12;
+let b: int = 8;
+let resta: int;
+resta = a - b;
+echo "Resultado de la resta:";
+echo resta+"\n";
+
+let evaluacion: string;
+evaluacion = if (resta >= 5) "La resta es mayor o igual a 5" : "La resta es menor a 5";
+echo evaluacion+"\n";
+
+// Anidación de operadores ternarios
+let numero: int = 20;
+let clasificacion: string;
+clasificacion = if (numero < 10) "Pequeño" : if (numero < 20) "Mediano" : "Grande";
+echo "El número es clasificado como:";
+echo clasificacion+"\n";
+
+// Operador ternario con valores booleanos
+let estado: bool = true;
+let estadoMensaje: string = if (estado) "Activo" : "Inactivo";
+echo "El estado actual es:";
+echo estadoMensaje;
+
+
+/* 
+
+Salida
+
+El estado del clima es:
+Caluroso
+
+Alerta: Nivel bajo
+
+Resultado de la resta:
+4
+
+La resta es menor a 5
+
+El número es clasificado como:
+Grande
+
+El estado actual es:
+Activo
+*/

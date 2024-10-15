@@ -1,15 +1,28 @@
 import { Resultado, TipoDato } from "../Expresiones/Tipos";
 import { Simbolo } from "./Simbolo";
+import { Arreglo } from "./arreglos";
 
 export class Entorno {
     public variables: Map<string, Simbolo>;
-    public entornoPadre: Entorno | null;
+    public arreglos: Map<string, Arreglo>;
+    
 
-    constructor(entornoPadre: Entorno | null) {
-        this.entornoPadre = entornoPadre;
-        this.variables = new Map<string, Simbolo>();
+    constructor(public entornoPadre: Entorno | null) {
+        
+        this.variables = new Map();
+        this.arreglos = new Map();
     }
 
+    // imprimir arreglos en el map
+    public imprimirArreglos(): void {
+        console.log("============= IMPRIMIENDO ARREGLOS =============");
+        this.arreglos.forEach((arreglo, key) => {
+            console.log(key, arreglo.valor);
+        });
+        console.log("===============================================");
+    }
+
+    // guardar variable
     guardarVariable(id:string, valor:Resultado, tipoDato:TipoDato, esConstante: boolean, linea:number,columna:number){
         const simbolo = new Simbolo(id,valor,tipoDato,esConstante,linea,columna)
         if (this.variables.has(id))
@@ -17,7 +30,7 @@ export class Entorno {
         this.variables.set(id,simbolo)
     }
 
-
+    // actualizar variable
     actualiarVariable(id: string, valor: Resultado) {
         if (!this.variables.has(id)) 
             throw new Error("Esta variable no existe");
@@ -29,7 +42,9 @@ export class Entorno {
         this.variables.set(id,valor);
     }
 
-    obtenerVariable(id: string): Simbolo | undefined {
+
+    // obtener variable
+    obtenerVariable(id: string): Simbolo | null | undefined {
         let entorno: Entorno | null = this;
         while (entorno != null) {
             if (entorno.variables.has(id)) {
@@ -37,6 +52,38 @@ export class Entorno {
             }
             entorno = entorno.entornoPadre;
         }
-        return undefined;
+        return null;
     }
+
+    // obtener arreglo
+    obtenerArreglo(id: string): Arreglo | null | undefined {
+        let entorno: Entorno | null = this;
+        while (entorno != null) {
+            if (entorno.arreglos.has(id)) {
+                return entorno.arreglos.get(id);
+            }
+            entorno = entorno.entornoPadre;
+        }
+        return null;
+    }
+
+    // guardar arreglo
+    guardarArreglo(id: string, tipo: TipoDato, filas: number, columnas: number, linea: number, columna: number) {
+        if (this.arreglos.has(id)) {
+            throw new Error("Este arreglo ya existe");
+        } else if (this.variables.has(id)) {
+            throw new Error("Este ID es una variable");
+        }
+        let arreglo = new Arreglo(id, tipo, filas, columnas, linea, columna);
+        this.arreglos.set(id, arreglo);
+    }
+
+    // actualizar arreglo
+    actualizarArreglo(id: string, arreglo: Arreglo) {
+        if (!this.arreglos.has(id)) {
+            throw new Error("Este arreglo no existe");
+        }
+        this.arreglos.set(id, arreglo);
+    }
+
 }

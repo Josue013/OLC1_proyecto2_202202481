@@ -1,0 +1,19 @@
+// Ejemplos
+let vector3:string[] = ["Hola", "Mundo"];
+let valor3:string = vector3[0]; // Almacena el valor "Hola"
+
+
+let vector4: int [][] = [ [1, 2], [3, 4] ];
+let valor4: int = vector4[0][0]; // Almacena el valor 1
+
+
+vector3[0] = "OLC1";
+vector3[1] = "2do Semestre";
+
+let valor5:string = vector3[0]; // Almacena el valor "OLC1"
+let valor6:string = vector3[1]; // Almacena el valor "2do Semestre"
+
+echo valor3;
+echo valor4;
+echo valor5;
+echo valor6;

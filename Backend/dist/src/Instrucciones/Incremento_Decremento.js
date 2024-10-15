@@ -15,8 +15,8 @@ class Incremento_Decremento extends Instruccion_1.Instruccion {
             if (simbolo.esConstante) {
                 throw new Error(`La variable ${this.id} es una constante y no puede ser reasignada`);
             }
-            let nuevoValor = { valor: 0, tipoDato: Tipos_1.TipoDato.ENTERO };
-            if (simbolo.obtenertipoDato() == Tipos_1.TipoDato.ENTERO) {
+            let nuevoValor = { valor: 0, tipoDato: simbolo.obtenertipoDato() };
+            if (simbolo.obtenertipoDato() == Tipos_1.TipoDato.ENTERO || simbolo.obtenertipoDato() == Tipos_1.TipoDato.DECIMAL) {
                 if (this.signo == "++") {
                     nuevoValor.valor = simbolo.getValor().valor + 1;
                 }
@@ -28,11 +28,11 @@ class Incremento_Decremento extends Instruccion_1.Instruccion {
                 }
             }
             else {
-                throw new Error(`Tipo ${simbolo.obtenertipoDato()} no es asignable a ${Tipos_1.TipoDato.ENTERO}`);
+                throw new Error(`Tipo ${simbolo.obtenertipoDato()} no es asignable a ${Tipos_1.TipoDato.ENTERO} o ${Tipos_1.TipoDato.DECIMAL}`);
             }
             simbolo.setValor(nuevoValor);
             simbolo.actualizarValor(nuevoValor);
-            entorno.actualizarSimbolo(this.id, simbolo);
+            //entorno.actualizarSimbolo(this.id, simbolo);
             console.log(`Asignación de ${this.id} con valor ${nuevoValor.valor}`);
         }
         else {
