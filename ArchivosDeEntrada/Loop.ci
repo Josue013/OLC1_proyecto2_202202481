@@ -1,0 +1,13 @@
+// Loop
+let x : int = 1;
+
+
+loop {
+    
+    echo "valor de x: " + x;
+    x++;
+    if (x > 20){
+        break;
+    }
+     
+}

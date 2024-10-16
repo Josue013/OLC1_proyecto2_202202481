@@ -28,6 +28,7 @@
     const { Switch } = require("../dist/src/Instrucciones/Control/Switch");
     const { For } = require("../dist/src/Instrucciones/Ciclos/For");
     const { DoUntil } = require("../dist/src/Instrucciones/Ciclos/DoUntil");
+    const { Loop } = require("../dist/src/Instrucciones/Ciclos/Loop");
 
 %}
 
@@ -80,6 +81,9 @@
 // Do until
 "do"                   return 'DO';
 "until"                return 'UNTIL';
+
+// Loop
+"loop"                 return 'LOOP';
 
 // Let  
 "let"                  return 'LET';
@@ -369,6 +373,7 @@ funciones
     | ciclo_while                         {$$ = $1;}
     | ciclo_for                           {$$ = $1;}
     | ciclo_do_until                      {$$ = $1;}
+    | ciclo_loop                          {$$ = $1;}
 ;
 
 // ================ Funcion echo ===================
@@ -448,4 +453,10 @@ actualizacion_variables
 
 ciclo_do_until
     : DO bloque UNTIL PIZQ expresion PDER PYC     { $$ = new DoUntil($2,$5,@1.first_line,@1.first_column); }
+;
+
+// ================ Ciclo Loop ===================
+
+ciclo_loop
+    : LOOP bloque    { $$ = new Loop($2,@1.first_line,@1.first_column); }
 ;
