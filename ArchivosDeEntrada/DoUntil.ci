@@ -1,0 +1,10 @@
+let x : int = 0;
+x = 10;
+
+echo "===============================";
+do {
+    echo "valor de x dentro de ciclo: " + x;
+    x--;
+} until(x < 0);
+echo "===============================";
+
