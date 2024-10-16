@@ -26,6 +26,7 @@
     const { Case } = require("../dist/src/Instrucciones/Control/Case");
     const { Default } = require("../dist/src/Instrucciones/Control/Default");
     const { Switch } = require("../dist/src/Instrucciones/Control/Switch");
+    const { For } = require("../dist/src/Instrucciones/Ciclos/For");
 
 %}
 
@@ -71,6 +72,9 @@
 
 // return
 "return"               return 'RETURN';
+
+// For
+"for"                  return 'FOR';
 
 // Let  
 "let"                  return 'LET';
@@ -355,9 +359,10 @@ modificar_vector
 
 funciones 
     : fn_echo PYC                         {$$ = $1;}
-    | fn_if                            {$$ = $1;}
+    | fn_if                               {$$ = $1;}
     | Switch                              {$$ = $1;}
-    | ciclo_while PYC                     {$$ = $1;}
+    | ciclo_while                         {$$ = $1;}
+    | ciclo_for                           {$$ = $1;}
 ;
 
 // ================ Funcion echo ===================
@@ -420,4 +425,15 @@ inst_continue
 inst_return
         : RETURN expresion                     {$$ = new Return($2,@1.first_line,@1.first_column)}
         | RETURN                               {$$ = new Return(null,@1.first_line,@1.first_column)}
+;
+
+// ================ Ciclo for ===================
+
+ciclo_for 
+    : FOR PIZQ Variables PYC expresion PYC actualizacion_variables PDER bloque      { $$ = new For($3,$5,$7,$9,@1.first_line,@1.first_column); }
+;
+
+actualizacion_variables
+    : incremento_y_decremento         { $$ = $1; }
+    | asignacion_var                  { $$ = $1; }  
 ;

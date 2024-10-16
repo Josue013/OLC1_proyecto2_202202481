@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 
 import { AST } from "./src/AST/AST"
-import { Reportes } from "./src/Listas/Reportes"
+
 
 const gramatica = require("../Gramatica/gramatica.js")
 

@@ -1,0 +1,29 @@
+//Ejemplo
+
+let i: int;
+
+echo "incremento";
+for(i = 0; i<3; i++){
+    echo "i con valor de: " + i;
+}
+
+echo "decremento";
+for(i = 3; i>0; i--){
+    echo "i con valor de: " + i;
+}
+
+/* 
+
+Salida
+
+incremento
+i con valor de: 0
+i con valor de: 1
+i con valor de: 2
+decremento
+i con valor de: 3
+i con valor de: 2
+i con valor de: 1
+
+
+*/

@@ -18,7 +18,7 @@ while (x < 10) {
     echo x;
     echo "Valor de y:";
     echo y;
-};
+}
 
 echo "\n========== Ciclo while terminado ========== \n";
 echo "Valor final de x:";
@@ -44,7 +44,7 @@ while (bandera) {
     if (contador >= 5) {
         bandera = false;
     }
-};
+}
 
 echo "======== Ciclo while terminado ========\n";
 echo "Valor final del contador:";
@@ -87,7 +87,7 @@ while (a < 20 && bandera2) {
     if (resultado2 < 50 || b < 50) {
         bandera2 = false;
     }
-};
+}
 
 echo "======== Ciclo while terminado ========\n";
 echo "Valor final de x:";
@@ -126,7 +126,7 @@ while (bandera3) {
         echo "Contador alcanzó 10, saliendo del ciclo con 'break'.";
         break;
     }
-};
+}
 
 echo "======== Ciclo while terminado ========\n";
 echo "Valor final del contador:";
