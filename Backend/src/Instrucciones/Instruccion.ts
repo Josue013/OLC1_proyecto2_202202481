@@ -10,4 +10,5 @@ export abstract class  Instruccion{
     }
 
     public abstract ejecutar(entorno:Entorno): any | null;
+    public abstract getAST(anterior: string): string;
 }

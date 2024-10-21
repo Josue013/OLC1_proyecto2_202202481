@@ -1,16 +1,18 @@
 import { Resultado, TipoDato } from "../Expresiones/Tipos";
 import { Simbolo } from "./Simbolo";
 import { Arreglo } from "./arreglos";
+import { Funcion } from "../Instrucciones/Funcion";
 
 export class Entorno {
     public variables: Map<string, Simbolo>;
     public arreglos: Map<string, Arreglo>;
-    
+    public funciones: Map<string, Funcion>;
 
     constructor(public entornoPadre: Entorno | null) {
         
         this.variables = new Map();
         this.arreglos = new Map();
+        this.funciones = new Map();
     }
 
     // imprimir arreglos en el map
@@ -22,11 +24,27 @@ export class Entorno {
         console.log("===============================================");
     }
 
+    // imprimir funciones en el map
+    public imprimirFunciones(): void {
+        console.log("============= IMPRIMIENDO FUNCIONES =============");
+        this.funciones.forEach((funcion, key) => {
+            console.log(key, funcion);
+        });
+        console.log("===============================================");
+    }
+
     // guardar variable
     guardarVariable(id:string, valor:Resultado, tipoDato:TipoDato, esConstante: boolean, linea:number,columna:number){
-        const simbolo = new Simbolo(id,valor,tipoDato,esConstante,linea,columna)
-        if (this.variables.has(id))
+        
+        let entorno: Entorno | null = this;
+        if (entorno.variables.has(id)) {
             throw Error("Esta variable ya existe")
+        } else if (entorno.arreglos.has(id)) {
+            throw Error("Este ID es un arreglo")
+        } else if (entorno.funciones.has(id)) {
+            throw Error("Este ID es una función")
+        }
+        const simbolo = new Simbolo(id,valor,tipoDato,esConstante,linea,columna)
         this.variables.set(id,simbolo)
     }
 
@@ -73,7 +91,10 @@ export class Entorno {
             throw new Error("Este arreglo ya existe");
         } else if (this.variables.has(id)) {
             throw new Error("Este ID es una variable");
+        } else if (this.funciones.has(id)) {
+            throw new Error("Este ID es una función");
         }
+
         let arreglo = new Arreglo(id, tipo, filas, columnas, linea, columna);
         this.arreglos.set(id, arreglo);
     }
@@ -85,5 +106,42 @@ export class Entorno {
         }
         this.arreglos.set(id, arreglo);
     }
+
+
+    // guardar funcion
+    public guardarFuncion(id: string, funcion: Funcion) {
+        let entorno: Entorno | null = this;
+        if (entorno.funciones.has(id)) {
+            throw new Error("Esta función ya existe");
+        } else if (entorno.variables.has(id)) {
+            throw new Error("Este ID es una variable");
+        } else if (entorno.arreglos.has(id)) {
+            throw new Error("Este ID es un arreglo");
+        }
+        this.funciones.set(id, funcion);
+    }
+
+    // obtener funcion
+    public obtenerFuncion(id: string): Funcion | undefined {
+        let entorno: Entorno | null = this;
+        while (entorno != null) {
+            if (entorno.funciones.has(id)) {
+                return entorno.funciones.get(id);
+            }
+            entorno = entorno.entornoPadre;
+        }
+        return undefined;
+    }   
+
+    // obtener entorno global
+    public obtenerEntornoGlobal(): Entorno {
+        let entorno: Entorno | null = this;
+        while (entorno?.entornoPadre != null) {
+            entorno = entorno.entornoPadre;
+        }
+        return entorno;
+    }
+
+
 
 }

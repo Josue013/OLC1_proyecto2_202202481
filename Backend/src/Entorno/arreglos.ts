@@ -1,5 +1,8 @@
 import { Simbolo } from "./Simbolo";
 import { TipoDato } from "../Expresiones/Tipos";
+import { Error_ } from "../Error/Errores_";
+import { TipoError } from "../Error/Errores_";
+import { agregarError } from "../AST/AST";
 
 export class Arreglo {
   public id: string;

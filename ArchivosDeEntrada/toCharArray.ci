@@ -1,0 +1,8 @@
+EJECUTAR main();
+
+function void main(){
+    //Ejemplos
+    let vector3:char[] = toCharArray("hola");
+    let valor3:char = vector3[0]; // Almacena el valor "h"
+    echo valor3;
+}

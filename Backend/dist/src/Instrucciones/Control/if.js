@@ -5,6 +5,9 @@ const Tipos_1 = require("../../Expresiones/Tipos");
 const Instruccion_1 = require("../Instruccion");
 const Break_1 = require("../Break");
 const Continue_1 = require("../Continue");
+const Errores_1 = require("../../Error/Errores_");
+const Errores_2 = require("../../Error/Errores_");
+const AST_1 = require("../../AST/AST");
 class Fn_if extends Instruccion_1.Instruccion {
     constructor(condicion, instruccionesV, instruccionesF, elseif) {
         super(0, 0);
@@ -16,12 +19,14 @@ class Fn_if extends Instruccion_1.Instruccion {
     ejecutar(entorno) {
         const condicion = this.condicion.calcular(entorno);
         if (condicion.tipoDato != Tipos_1.TipoDato.BOOLEANO)
-            throw new Error("La condición no es booleana");
+            throw (0, AST_1.agregarError)(new Errores_1.Error_("La condición no es booleana", this.linea, this.columna, Errores_2.TipoError.SEMANTICO));
         if (condicion.valor) {
             const transfer = this.instruccionesV.ejecutar(entorno);
             if (transfer instanceof Break_1.Break)
                 return transfer;
             if (transfer instanceof Continue_1.Continue)
+                return transfer;
+            if (transfer.typeValue == 'return')
                 return transfer;
         }
         else {
@@ -31,6 +36,8 @@ class Fn_if extends Instruccion_1.Instruccion {
                     return transfer;
                 if (transfer instanceof Continue_1.Continue)
                     return transfer;
+                if (transfer.typeValue == 'return')
+                    return transfer;
             }
             else if (this.elseif != null) { // Caso Elseif
                 const transfer = this.elseif.ejecutar(entorno);
@@ -38,8 +45,13 @@ class Fn_if extends Instruccion_1.Instruccion {
                     return transfer;
                 if (transfer instanceof Continue_1.Continue)
                     return transfer;
+                if (transfer.typeValue == 'return')
+                    return transfer;
             }
         }
+    }
+    getAST(anterior) {
+        return "";
     }
 }
 exports.Fn_if = Fn_if;

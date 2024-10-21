@@ -1,0 +1,13 @@
+EJECUTAR main();
+
+function void main(){
+    //Ejemplos
+    let vector1:string[] = ["Hola", "Mundo"];
+    let cadena:string = "compi1";
+    let valor : int = len(vector1); //Almacena 2
+    let valor2: int = len(cadena); //Almacena 6
+
+    echo valor;
+    echo valor2;
+
+}

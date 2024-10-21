@@ -1,8 +1,15 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Vector1 = void 0;
 const Tipos_1 = require("../Expresiones/Tipos");
 const Instruccion_1 = require("./Instruccion");
+const Errores_1 = require("../Error/Errores_");
+const Errores_2 = require("../Error/Errores_");
+const AST_1 = require("../AST/AST");
+const Contador_1 = __importDefault(require("../Entorno/Contador"));
 class Vector1 extends Instruccion_1.Instruccion {
     constructor(id, tipo, tipo2, exp1, exp2, line, column) {
         super(line, column);
@@ -16,7 +23,8 @@ class Vector1 extends Instruccion_1.Instruccion {
         var _a;
         // Verifica que los tipos coincidan
         if (this.tipo2 !== this.tipo) {
-            throw new Error(`Tipo ${this.tipo2} no coincide con ${this.tipo}`);
+            //throw new Error(`Tipo ${this.tipo2} no coincide con ${this.tipo}`);
+            throw (0, AST_1.agregarError)(new Errores_1.Error_(`Tipo ${this.tipo2} no coincide con ${this.tipo}`, this.linea, this.columna, Errores_2.TipoError.SEMANTICO));
         }
         let tipoDominante;
         let valorPredeterminado;
@@ -43,7 +51,8 @@ class Vector1 extends Instruccion_1.Instruccion {
                 valorPredeterminado = "";
                 break;
             default:
-                throw new Error(`Tipo ${this.tipo} no permitido para la declaración de vectores`);
+                //throw new Error(`Tipo ${this.tipo} no permitido para la declaración de vectores`);
+                throw (0, AST_1.agregarError)(new Errores_1.Error_(`Tipo ${this.tipo} no permitido para la declaración de vectores`, this.linea, this.columna, Errores_2.TipoError.SEMANTICO));
         }
         // Calcular el tamaño del vector
         const exp1Resultado = this.exp1.calcular(entorno);
@@ -51,7 +60,8 @@ class Vector1 extends Instruccion_1.Instruccion {
             const exp2Resultado = this.exp2.calcular(entorno);
             // Verifica que las posiciones sean de tipo entero
             if (exp1Resultado.tipoDato != Tipos_1.TipoDato.ENTERO || exp2Resultado.tipoDato != Tipos_1.TipoDato.ENTERO) {
-                throw new Error("La posición del vector debe ser de tipo entero");
+                //throw new Error("La posición del vector debe ser de tipo entero");
+                throw (0, AST_1.agregarError)(new Errores_1.Error_(`La posición del vector debe ser de tipo entero`, this.linea, this.columna, Errores_2.TipoError.SEMANTICO));
             }
             // Guarda el vector en el entorno con dos dimensiones
             entorno.guardarArreglo(this.id[0], tipoDominante, exp1Resultado.valor, exp2Resultado.valor, this.linea, this.columna);
@@ -59,13 +69,66 @@ class Vector1 extends Instruccion_1.Instruccion {
         else {
             // Verifica que la posición sea de tipo entero
             if (exp1Resultado.tipoDato != Tipos_1.TipoDato.ENTERO) {
-                throw new Error("La posición del vector debe ser de tipo entero");
+                //throw new Error("La posición del vector debe ser de tipo entero");
+                throw (0, AST_1.agregarError)(new Errores_1.Error_(`La posición del vector debe ser de tipo entero`, this.linea, this.columna, Errores_2.TipoError.SEMANTICO));
             }
             // Guarda el vector en el entorno con una dimensión
             entorno.guardarArreglo(this.id[0], tipoDominante, exp1Resultado.valor, 1, this.linea, this.columna);
         }
         // Inicializa los valores predeterminados del vector
         (_a = entorno.obtenerArreglo(this.id[0])) === null || _a === void 0 ? void 0 : _a.inicializarValoresPredeterminados("Vector", tipoDominante, valorPredeterminado, this.linea, this.columna);
+    }
+    /* LET ID : TIPO ([] | [][]) = new vector TIPO ( [ EXPRESION ] | [ EXPRESION ][ EXPRESION ]) */
+    getAST(anterior) {
+        let result = "";
+        let counter = Contador_1.default.getInstancia();
+        let declarationNode = `n${counter.get()}`;
+        let letNode = `n${counter.get()}`;
+        let idNode = `n${counter.get()}`;
+        let colonNode = `n${counter.get()}`;
+        let typeNode = `n${counter.get()}`;
+        let lBracketNode = `n${counter.get()}`;
+        let rBracketNode = `n${counter.get()}`;
+        let equalNode = `n${counter.get()}`;
+        let newNode = `n${counter.get()}`;
+        let vectorNode = `n${counter.get()}`;
+        let lParenNode = `n${counter.get()}`;
+        let exp1Node = `n${counter.get()}`;
+        let rParenNode = `n${counter.get()}`;
+        result += `${declarationNode}[label="Declaración Vector"];\n`;
+        result += `${letNode}[label="LET"];\n`;
+        result += `${idNode}[label="${this.id[0]}"];\n`;
+        result += `${colonNode}[label=":"];\n`;
+        result += `${typeNode}[label="${this.tipo}"];\n`;
+        result += `${lBracketNode}[label="["];\n`;
+        result += `${rBracketNode}[label="]"];\n`;
+        result += `${equalNode}[label="="];\n`;
+        result += `${newNode}[label="new"];\n`;
+        result += `${vectorNode}[label="vector"];\n`;
+        result += `${lParenNode}[label="("];\n`;
+        result += `${exp1Node}[label="Expresion"];\n`;
+        result += `${rParenNode}[label=")"];\n`;
+        result += `${anterior} -> ${declarationNode};\n`;
+        result += `${declarationNode} -> ${letNode};\n`;
+        result += `${declarationNode} -> ${idNode};\n`;
+        result += `${declarationNode} -> ${colonNode};\n`;
+        result += `${declarationNode} -> ${typeNode};\n`;
+        result += `${declarationNode} -> ${lBracketNode};\n`;
+        result += `${declarationNode} -> ${rBracketNode};\n`;
+        result += `${declarationNode} -> ${equalNode};\n`;
+        result += `${declarationNode} -> ${newNode};\n`;
+        result += `${declarationNode} -> ${vectorNode};\n`;
+        result += `${declarationNode} -> ${lParenNode};\n`;
+        result += `${declarationNode} -> ${exp1Node};\n`;
+        result += this.exp1.getAST(exp1Node);
+        result += `${declarationNode} -> ${rParenNode};\n`;
+        if (this.exp2 != null) {
+            let exp2Node = `n${counter.get()}`;
+            result += `${exp2Node}[label="Expresion"];\n`;
+            result += `${declarationNode} -> ${exp2Node};\n`;
+            result += this.exp2.getAST(exp2Node);
+        }
+        return result;
     }
 }
 exports.Vector1 = Vector1;

@@ -1,9 +1,9 @@
 function void Hanoi(discos: int, origen: int, auxiliar: int, destino: int){
     if (discos == 1) {
-        echo "Mover disco de ", origen, " a ", destino;
+        echo "Mover disco de "+ origen+ " a "+ destino;
     } else {
         Hanoi(discos = discos - 1, origen = origen, destino = destino, auxiliar = auxiliar);
-        echo "Mover disco de ", origen, " a ", destino;
+        echo "Mover disco de "+ origen+ " a "+ destino;
         Hanoi(discos = discos - 1, origen = auxiliar, destino = origen, auxiliar = destino);
     }
 }
@@ -17,3 +17,4 @@ function void main(){
     Hanoi(discos = 3, origen = 1, auxiliar = 2, destino = 3);
     echo "\n";
 }
+

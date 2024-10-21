@@ -2,6 +2,9 @@ import { Resultado, TipoDato } from "../Expresiones/Tipos";
 import { Expresion } from "../Expresiones/Expresion";
 import { Instruccion } from "./Instruccion";
 import { Entorno } from "../Entorno/Entorno";
+import { Error_ } from "../Error/Errores_";
+import { TipoError } from "../Error/Errores_";
+import { agregarError } from "../AST/AST";
 
 export class Vector2 extends Instruccion {
   public id: string[];                                     // Identificadores del vector
@@ -44,7 +47,8 @@ export class Vector2 extends Instruccion {
         valorPredeterminado = "";
         break;
       default:
-        throw new Error(`Tipo ${this.tipo} no permitido para la declaración de vectores`);
+        //throw new Error(`Tipo ${this.tipo} no permitido para la declaración de vectores`);
+        throw agregarError(new Error_(`Tipo ${this.tipo} no permitido para la declaración de vectores`, this.linea, this.columna, TipoError.SEMANTICO));
     }
 
     // Guardar el vector en el entorno
@@ -68,11 +72,13 @@ export class Vector2 extends Instruccion {
           if (valor.tipoDato == tipoDominante) {
             entorno.obtenerArreglo(this.id[0])?.asignarValor(i, 0, this.id[0], tipoDominante, valor.valor, this.linea, this.columna);
           } else {
-            throw new Error(`Tipo de dato ${valor.tipoDato} no asignable a ${tipoDominante}`);
+            //throw new Error(`Tipo de dato ${valor.tipoDato} no asignable a ${tipoDominante}`);
+            throw agregarError(new Error_(`Tipo de dato ${valor.tipoDato} no asignable a ${tipoDominante}`, this.linea, this.columna, TipoError.SEMANTICO));
           }
         }
       } else {
-        throw new Error(`El vector ${this.id} no puede ser de dos dimensiones`);
+        //throw new Error(`El vector ${this.id} no puede ser de dos dimensiones`);
+        throw agregarError(new Error_(`El vector ${this.id} no puede ser de dos dimensiones`, this.linea, this.columna, TipoError.SEMANTICO));
       }
     } else if (!(this.valor instanceof Expresion)) {
       // Caso para vectores bidimensionales
@@ -96,7 +102,8 @@ export class Vector2 extends Instruccion {
             if (valor.tipoDato == tipoDominante) {
               entorno.obtenerArreglo(this.id[0])?.asignarValor(i, j, this.id[0], tipoDominante, valor.valor, this.linea, this.columna);
             } else {
-              throw new Error(`Tipo de dato ${valor.tipoDato} no asignable a ${tipoDominante}`);
+              //throw new Error(`Tipo de dato ${valor.tipoDato} no asignable a ${tipoDominante}`);
+              throw agregarError(new Error_(`Tipo de dato ${valor.tipoDato} no asignable a ${tipoDominante}`, this.linea, this.columna, TipoError.SEMANTICO));
             }
           }
         }
@@ -115,9 +122,18 @@ export class Vector2 extends Instruccion {
         if (valor.tipoDato == tipoDominante) {
           entorno.obtenerArreglo(this.id[0])?.asignarValor(i, 0, this.id[0], tipoDominante, valor.valor, this.linea, this.columna); 
         } else {
-          throw new Error(`Tipo de dato ${valor.tipoDato} no asignable a ${tipoDominante}`);
+          //throw new Error(`Tipo de dato ${valor.tipoDato} no asignable a ${tipoDominante}`);
+          throw agregarError(new Error_(`Tipo de dato ${valor.tipoDato} no asignable a ${tipoDominante}`, this.linea, this.columna, TipoError.SEMANTICO));
         }
       }
     }
   }
+
+
+  /* LET ID : TIPO ([] | [][]) = LISTAVALORES */
+
+  public getAST(anterior: string): string {
+      return "";
+  }
+
 }

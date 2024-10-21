@@ -11,4 +11,5 @@ export abstract class  Expresion {
     }
 
     public abstract calcular(entorno:Entorno):Resultado;
+    public abstract getAST(anterior: string): string;
 }

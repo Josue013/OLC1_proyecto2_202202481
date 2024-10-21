@@ -1,6 +1,7 @@
 import { TipoDato } from "./Tipos"
 import { Resultado } from "./Tipos"
 import { Expresion } from "./Expresion"
+import Contador from "../Entorno/Contador"
 
 export class Basico extends Expresion{
     private valor:string
@@ -32,6 +33,17 @@ export class Basico extends Expresion{
             return {valor:this.valor, tipoDato:this.tipo} 
         // Nulo
         return {valor:null,tipoDato:TipoDato.NULO} 
+    }
+
+    public getAST(last: string): string {
+        let counter = Contador.getInstancia();
+        let basicoNode = `n${counter.get()}`;
+        let valueNode = `n${counter.get()}`;
+        let result = `${basicoNode}[label="Basico"];\n`;
+        result += `${valueNode}[label="${this.valor}"];\n`;
+        result += `${basicoNode} -> ${valueNode};\n`;
+        result += `${last} -> ${basicoNode};\n`;
+        return result;
     }
 
 }

@@ -8,6 +8,10 @@ import { Continue } from "../Continue";
 import { Case } from "./Case";
 import { Default } from "./Default";
 import { Return } from "../Return";
+import { Error_ } from "../../Error/Errores_";
+import { TipoError } from "../../Error/Errores_";
+import { agregarError } from "../../AST/AST";
+import Contador from "../../Entorno/Contador";
 
 export class Switch extends Instruccion {
   cond: Expresion; // Expresión que representa la condición del switch
@@ -24,7 +28,8 @@ export class Switch extends Instruccion {
   public ejecutar(entorno: Entorno): any {
     // Verifica que haya al menos un caso o un default
     if (this.cases == null && this.Default == null) {
-      throw new Error("Error en Switch: No hay casos ni default");
+      //throw new Error("Error en Switch: No hay casos ni default");
+      throw agregarError(new Error_("Error en Switch: No hay casos ni default", this.linea, this.columna, TipoError.SEMANTICO));
     }
 
     let valor = false; // Indica si se ha encontrado un caso coincidente
@@ -43,10 +48,11 @@ export class Switch extends Instruccion {
             if (r instanceof Break) {
               Default2 = false; // No se ejecuta el caso default
               break;
-            } else if (r instanceof Return) {
+            } else if (r.typeValue == 'return') {
               return r; // Retorna el valor si es una instrucción de retorno
             } else {
-              throw new Error("Error en Case");
+              //throw new Error("Error en Case");
+              throw agregarError(new Error_("Error en Case", this.linea, this.columna, TipoError.SEMANTICO));
             }
           }
           valor = true; // Indica que se ha encontrado un caso coincidente
@@ -57,10 +63,10 @@ export class Switch extends Instruccion {
               Default2 = false; // No se ejecuta el caso default
               valor = false;
               break;
-            } else if (r instanceof Return) {
+            } else if (r.typeValue == 'return') {
               return r; // Retorna el valor si es una instrucción de retorno
             } else {
-              throw new Error("Error en Case");
+              throw agregarError(new Error_("Error en Case", this.linea, this.columna, TipoError.SEMANTICO));
             }
           }
         }
@@ -72,10 +78,10 @@ export class Switch extends Instruccion {
         if (r != null || r != undefined) {
           if (r instanceof Break) {
             return;
-          } else if (r instanceof Return) {
+          } else if (r.typeValue == 'return') {
             return r;
           } else {
-            throw new Error("Error en Case");
+            throw agregarError(new Error_("Error en Case", this.linea, this.columna, TipoError.SEMANTICO));
           }
         }
       }
@@ -89,9 +95,58 @@ export class Switch extends Instruccion {
         } else if (r instanceof Return) {
           return r;
         } else {
-          throw new Error("Error en Case");
+          throw agregarError(new Error_("Error en Case", this.linea, this.columna, TipoError.SEMANTICO));
         }
       }
     }
   }
+
+  public getAST(last: string): string {
+    let result = "";
+    let counter = Contador.getInstancia();
+    let switchNodeT = `n${counter.get()}`;
+    let switchNode = `n${counter.get()}`;
+    let lParenNode = `n${counter.get()}`;
+    let expNode = `n${counter.get()}`;
+    let rParenNode = `n${counter.get()}`;
+    let lBraceNode = `n${counter.get()}`;
+    let casesNode = `n${counter.get()}`;
+    let defaultNode = `n${counter.get()}`;
+    let rBraceNode = `n${counter.get()}`;
+
+    result += `${switchNodeT}[label="I_Switch"];\n`;
+    result += `${switchNode}[label="switch"];\n`;
+    result += `${lParenNode}[label="("];\n`;
+    result += `${expNode}[label="exp"];\n`;
+    result += `${rParenNode}[label=")"];\n`;
+    result += `${lBraceNode}[label="{" ];\n`;
+    result += `${casesNode}[label="Cases"];\n`;
+    result += `${defaultNode}[label="Default"];\n`;
+    result += `${rBraceNode}[label="}"];\n`;
+
+    result += `${last} -> ${switchNodeT};\n`;
+    result += `${switchNodeT} -> ${switchNode};\n`;
+    result += `${switchNodeT} -> ${lParenNode};\n`;
+    result += `${switchNodeT} -> ${expNode};\n`;
+    result += this.cond.getAST(expNode);
+    result += `${switchNodeT} -> ${rParenNode};\n`;
+    result += `${switchNodeT} -> ${lBraceNode};\n`;
+    result += `${switchNodeT} -> ${casesNode};\n`;
+
+    if (this.cases != null) {
+      for (const Case of this.cases) {
+        result += Case.getAST(casesNode);
+      }
+    }
+
+    result += `${switchNodeT} -> ${defaultNode};\n`;
+    if (this.Default != null) {
+      result += this.Default.getAST(defaultNode);
+    }
+
+    result += `${switchNodeT} -> ${rBraceNode};\n`;
+    return result;
+  }
+
+
 }

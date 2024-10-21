@@ -1,0 +1,18 @@
+
+main();
+function void main(){
+    echo "Dentro de funcion Main\n";
+
+    // Loop    
+    echo "Probando Loop adentro de funcion main";
+    let x : int = 1;
+    loop {
+    
+    echo "valor de x: " + x;
+    x++;
+    if (x > 20){
+        break;
+    }
+     
+}
+}

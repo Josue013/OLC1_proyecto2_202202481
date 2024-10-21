@@ -1,6 +1,10 @@
 import { Entorno } from "../Entorno/Entorno";
 import { Expresion } from "./Expresion";
 import { Resultado, TipoDato } from "./Tipos";
+import { Error_ } from "../Error/Errores_";
+import { TipoError } from "../Error/Errores_";
+import { agregarError } from "../AST/AST";
+import Contador from "../Entorno/Contador";
 
 export class Aritmetica extends Expresion {
 
@@ -25,7 +29,8 @@ export class Aritmetica extends Expresion {
                 case TipoDato.DECIMAL:
                     return { valor: parseFloat(exp1.valor) * -1, tipoDato: TipoDato.DECIMAL };
                 default:
-                    throw new Error(`Negacion Invalida para ${tipo1}`);
+                    //throw new Error(`Negacion Invalida para ${tipo1}`);
+                    throw agregarError(new Error_(`Negacion Invalida para ${tipo1}`, this.linea, this.columna, TipoError.SEMANTICO));
             }
         }
         // Operación de suma
@@ -53,7 +58,8 @@ export class Aritmetica extends Expresion {
                         case TipoDato.STRING:
                             return { valor: String(exp1.valor) + String(exp2.valor), tipoDato: TipoDato.STRING };
                         default:
-                            throw new Error(`Suma Invalida entre ${tipo1} y ${tipo2}`);
+                            //throw new Error(`Suma Invalida entre ${tipo1} y ${tipo2}`);
+                            throw agregarError(new Error_(`Suma Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
                     }
                 // DECIMAL
                 case TipoDato.DECIMAL:
@@ -74,7 +80,8 @@ export class Aritmetica extends Expresion {
                         case TipoDato.STRING:
                             return { valor: String(exp1.valor) + String(exp2.valor), tipoDato: TipoDato.STRING };
                         default:
-                            throw new Error(`Suma Invalida entre ${tipo1} y ${tipo2}`);
+                            //throw new Error(`Suma Invalida entre ${tipo1} y ${tipo2}`);
+                            throw agregarError(new Error_(`Suma Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
                     }
                 // BOOLEANO
                 case TipoDato.BOOLEANO:
@@ -89,7 +96,8 @@ export class Aritmetica extends Expresion {
                         case TipoDato.STRING:
                             return { valor: String(exp1.valor ? 1 : 0) + String(exp2.valor), tipoDato: TipoDato.STRING };
                         default:
-                            throw new Error(`Suma Invalida entre ${tipo1} y ${tipo2}`);
+                            //throw new Error(`Suma Invalida entre ${tipo1} y ${tipo2}`);
+                            throw agregarError(new Error_(`Suma Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
                     }
                 // CHAR
                 case TipoDato.CHAR:
@@ -107,22 +115,29 @@ export class Aritmetica extends Expresion {
                         case TipoDato.STRING:
                             return { valor: String(exp1.valor) + String(exp2.valor), tipoDato: TipoDato.STRING };
                         default:
-                            throw new Error(`Suma Invalida entre ${tipo1} y ${tipo2}`);
+                            //throw new Error(`Suma Invalida entre ${tipo1} y ${tipo2}`);
+                            throw agregarError(new Error_(`Suma Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
                     }
                 // STRING
                 case TipoDato.STRING:
                     switch (tipo2) {
                         case TipoDato.ENTERO:
+                            return { valor: String(exp1.valor) + String(exp2.valor), tipoDato: TipoDato.STRING };
                         case TipoDato.DECIMAL:
+                            return { valor: String(exp1.valor) + String(exp2.valor), tipoDato: TipoDato.STRING };
                         case TipoDato.BOOLEANO:
+                            return { valor: String(exp1.valor) + String(exp2.valor), tipoDato: TipoDato.STRING };
                         case TipoDato.CHAR:
+                            return { valor: String(exp1.valor) + String(exp2.valor), tipoDato: TipoDato.STRING };
                         case TipoDato.STRING:
                             return { valor: String(exp1.valor) + String(exp2.valor), tipoDato: TipoDato.STRING };
                         default:
-                            throw new Error(`Suma Invalida entre ${tipo1} y ${tipo2}`);
+                            //throw new Error(`Suma Invalida entre ${tipo1} y ${tipo2}`);
+                            throw agregarError(new Error_(`Suma Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
                     }
                 default:
-                    throw new Error(`Suma Invalida entre ${tipo1} y ${tipo2}`);
+                    //throw new Error(`Suma Invalida entre ${tipo1} y ${tipo2}`);
+                    throw agregarError(new Error_(`Suma Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
             }
         }
         // Operación de resta
@@ -147,7 +162,8 @@ export class Aritmetica extends Expresion {
                         case TipoDato.CHAR:
                             return { valor: parseInt(exp1.valor) - exp2.valor.charCodeAt(0), tipoDato: TipoDato.ENTERO };
                         default:
-                            throw new Error(`Resta Invalida entre ${tipo1} y ${tipo2}`);
+                            //throw new Error(`Resta Invalida entre ${tipo1} y ${tipo2}`);
+                            throw agregarError(new Error_(`Resta Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
                     }
                 // DECIMAL
                 case TipoDato.DECIMAL:
@@ -165,7 +181,8 @@ export class Aritmetica extends Expresion {
                         case TipoDato.CHAR:
                             return { valor: (parseFloat(exp1.valor) - exp2.valor.charCodeAt(0)).toFixed(4), tipoDato: TipoDato.DECIMAL };
                         default:
-                            throw new Error(`Resta Invalida entre ${tipo1} y ${tipo2}`);
+                            //throw new Error(`Resta Invalida entre ${tipo1} y ${tipo2}`);
+                            throw agregarError(new Error_(`Resta Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
                     }
                 // BOOLEANO
                 case TipoDato.BOOLEANO:
@@ -177,7 +194,8 @@ export class Aritmetica extends Expresion {
                         case TipoDato.DECIMAL:
                             return { valor: ((exp1.valor ? 1 : 0) - parseFloat(exp2.valor)).toFixed(4), tipoDato: TipoDato.DECIMAL };
                         default:
-                            throw new Error(`Resta Invalida entre ${tipo1} y ${tipo2}`);
+                            //throw new Error(`Resta Invalida entre ${tipo1} y ${tipo2}`);
+                            throw agregarError(new Error_(`Resta Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
                     }
                 // CHAR
                 case TipoDato.CHAR:
@@ -189,10 +207,12 @@ export class Aritmetica extends Expresion {
                         case TipoDato.DECIMAL:
                             return { valor: (exp1.valor.charCodeAt(0) - parseFloat(exp2.valor)).toFixed(4), tipoDato: TipoDato.DECIMAL };
                         default:
-                            throw new Error(`Resta Invalida entre ${tipo1} y ${tipo2}`);
+                            //throw new Error(`Resta Invalida entre ${tipo1} y ${tipo2}`);
+                            throw agregarError(new Error_(`Resta Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
                     }
                 default:
-                    throw new Error(`Resta Invalida entre ${tipo1} y ${tipo2}`);
+                    //throw new Error(`Resta Invalida entre ${tipo1} y ${tipo2}`);
+                    throw agregarError(new Error_(`Resta Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
             }
         }
         // Operación Producto
@@ -214,7 +234,8 @@ export class Aritmetica extends Expresion {
                         case TipoDato.CHAR:
                             return { valor: parseInt(exp1.valor) * exp2.valor.charCodeAt(0), tipoDato: TipoDato.ENTERO };
                         default:
-                            throw new Error(`Multiplicacion Invalida entre ${tipo1} y ${tipo2}`);
+                            //throw new Error(`Multiplicacion Invalida entre ${tipo1} y ${tipo2}`);
+                            throw agregarError(new Error_(`Multiplicacion Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
                     }
                 // DECIMAL
                 case TipoDato.DECIMAL:
@@ -229,7 +250,8 @@ export class Aritmetica extends Expresion {
                         case TipoDato.CHAR:
                             return { valor: (parseFloat(exp1.valor) * exp2.valor.charCodeAt(0)).toFixed(4), tipoDato: TipoDato.DECIMAL };
                         default:
-                            throw new Error(`Multiplicacion Invalida entre ${tipo1} y ${tipo2}`);
+                            //throw new Error(`Multiplicacion Invalida entre ${tipo1} y ${tipo2}`);
+                            throw agregarError(new Error_(`Multiplicacion Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
                     }
                 // CHAR
                 case TipoDato.CHAR:
@@ -241,10 +263,12 @@ export class Aritmetica extends Expresion {
                         case TipoDato.DECIMAL:
                             return { valor: (exp1.valor.charCodeAt(0) * parseFloat(exp2.valor)).toFixed(4), tipoDato: TipoDato.DECIMAL };
                         default:
-                            throw new Error(`Multiplicacion Invalida entre ${tipo1} y ${tipo2}`);
+                            //throw new Error(`Multiplicacion Invalida entre ${tipo1} y ${tipo2}`);
+                            throw agregarError(new Error_(`Multiplicacion Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
                     }
                 default:
-                    throw new Error(`Multiplicacion Invalida entre ${tipo1} y ${tipo2}`);
+                    //throw new Error(`Multiplicacion Invalida entre ${tipo1} y ${tipo2}`);
+                    throw agregarError(new Error_(`Multiplicacion Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
             }
         }
         // Operación Division
@@ -259,20 +283,24 @@ export class Aritmetica extends Expresion {
                         // ENTERO / ENTERO
                         case TipoDato.ENTERO:
                             if (exp2.valor == 0)
-                                throw new Error("No se puede dividir entre 0")
+                                //throw new Error("No se puede dividir entre 0")
+                                throw agregarError(new Error_("No se puede dividir entre 0", this.linea, this.columna, TipoError.SEMANTICO));
                             return { valor: parseInt(exp1.valor) / parseInt(exp2.valor), tipoDato: TipoDato.DECIMAL };
                         // ENTERO / DECIMAL
                         case TipoDato.DECIMAL:
                             if (exp2.valor == 0)
-                                throw new Error("No se puede dividir entre 0")
+                                //throw new Error("No se puede dividir entre 0")
+                                throw agregarError(new Error_("No se puede dividir entre 0", this.linea, this.columna, TipoError.SEMANTICO));
                             return { valor: (parseFloat(exp1.valor) / parseFloat(exp2.valor)).toFixed(4), tipoDato: TipoDato.DECIMAL };
                         // ENTERO / CHAR
                         case TipoDato.CHAR:
                             if (exp2.valor == 0)
-                                throw new Error("No se puede dividir entre 0")
+                                //throw new Error("No se puede dividir entre 0")
+                                throw agregarError(new Error_("No se puede dividir entre 0", this.linea, this.columna, TipoError.SEMANTICO));
                             return { valor: parseInt(exp1.valor) / exp2.valor.charCodeAt(0), tipoDato: TipoDato.DECIMAL };
                         default:
-                            throw new Error(`Division Invalida entre ${tipo1} y ${tipo2}`);
+                            //throw new Error(`Division Invalida entre ${tipo1} y ${tipo2}`);
+                            throw agregarError(new Error_(`Division Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
                     }
                 // DECIMAL
                 case TipoDato.DECIMAL:
@@ -280,20 +308,24 @@ export class Aritmetica extends Expresion {
                         // DECIMAL / ENTERO
                         case TipoDato.ENTERO:
                             if (exp2.valor == 0)
-                                throw new Error("No se puede dividir entre 0")
+                                //throw new Error("No se puede dividir entre 0")
+                                throw agregarError(new Error_("No se puede dividir entre 0", this.linea, this.columna, TipoError.SEMANTICO));
                             return { valor: (parseFloat(exp1.valor) / parseFloat(exp2.valor)).toFixed(4), tipoDato: TipoDato.DECIMAL };
                         // DECIMAL / DECIMAL
                         case TipoDato.DECIMAL:
                             if (exp2.valor == 0)
-                                throw new Error("No se puede dividir entre 0")
+                                //throw new Error("No se puede dividir entre 0")
+                                throw agregarError(new Error_("No se puede dividir entre 0", this.linea, this.columna, TipoError.SEMANTICO));
                             return { valor: (parseFloat(exp1.valor) / parseFloat(exp2.valor)).toFixed(4), tipoDato: TipoDato.DECIMAL };
                         // DECIMAL / CHAR
                         case TipoDato.CHAR:
                             if (exp2.valor == 0)
-                                throw new Error("No se puede dividir entre 0")
+                            //    throw new Error("No se puede dividir entre 0")
+                                throw agregarError(new Error_("No se puede dividir entre 0", this.linea, this.columna, TipoError.SEMANTICO));
                             return { valor: (parseFloat(exp1.valor) / exp2.valor.charCodeAt(0)).toFixed(4), tipoDato: TipoDato.DECIMAL };
                         default:
-                            throw new Error(`Division Invalida entre ${tipo1} y ${tipo2}`);
+                            //throw new Error(`Division Invalida entre ${tipo1} y ${tipo2}`);
+                            throw agregarError(new Error_(`Division Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
                     }
                 // CHAR
                 case TipoDato.CHAR:
@@ -301,15 +333,18 @@ export class Aritmetica extends Expresion {
                         // CHAR / ENTERO
                         case TipoDato.ENTERO:
                             if (exp2.valor == 0)
-                                throw new Error("No se puede dividir entre 0")
+                                //throw new Error("No se puede dividir entre 0")
+                                throw agregarError(new Error_("No se puede dividir entre 0", this.linea, this.columna, TipoError.SEMANTICO));
                             return { valor: exp1.valor.charCodeAt(0) / parseInt(exp2.valor), tipoDato: TipoDato.DECIMAL };
                         // CHAR / DECIMAL
                         case TipoDato.DECIMAL:
                             if (exp2.valor == 0)
-                                throw new Error("No se puede dividir entre 0")
+                                //throw new Error("No se puede dividir entre 0")
+                                throw agregarError(new Error_("No se puede dividir entre 0", this.linea, this.columna, TipoError.SEMANTICO));
                             return { valor: (exp1.valor.charCodeAt(0) / parseFloat(exp2.valor)).toFixed(4), tipoDato: TipoDato.DECIMAL };
                         default:
-                            throw new Error(`Division Invalida entre ${tipo1} y ${tipo2}`);
+                            //throw new Error(`Division Invalida entre ${tipo1} y ${tipo2}`);
+                            throw agregarError(new Error_(`Division Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
                     }
             }
         }
@@ -329,7 +364,8 @@ export class Aritmetica extends Expresion {
                         case TipoDato.DECIMAL:
                             return { valor: Math.pow(parseInt(exp1.valor), parseFloat(exp2.valor)), tipoDato: TipoDato.DECIMAL };
                         default:
-                            throw new Error(`Potencia Invalida entre ${tipo1} y ${tipo2}`);
+                            //throw new Error(`Potencia Invalida entre ${tipo1} y ${tipo2}`);
+                            throw agregarError(new Error_(`Potencia Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
                     }
                 // DECIMAL
                 case TipoDato.DECIMAL:
@@ -341,10 +377,12 @@ export class Aritmetica extends Expresion {
                         case TipoDato.DECIMAL:
                             return { valor: Math.pow(parseFloat(exp1.valor), parseFloat(exp2.valor)), tipoDato: TipoDato.DECIMAL };
                         default:
-                            throw new Error(`Potencia Invalida entre ${tipo1} y ${tipo2}`);
+                            //throw new Error(`Potencia Invalida entre ${tipo1} y ${tipo2}`);
+                            throw agregarError(new Error_(`Potencia Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
                     }
                 default:
-                    throw new Error(`Potencia Invalida entre ${tipo1} y ${tipo2}`);
+                    //throw new Error(`Potencia Invalida entre ${tipo1} y ${tipo2}`);
+                    throw agregarError(new Error_(`Potencia Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
             }
         }
         // raiz 2 $ 2
@@ -363,7 +401,8 @@ export class Aritmetica extends Expresion {
                         case TipoDato.DECIMAL:
                             return { valor: Math.pow(parseInt(exp1.valor), 1 / parseFloat(exp2.valor)), tipoDato: TipoDato.DECIMAL };
                         default:
-                            throw new Error(`Raiz Invalida entre ${tipo1} y ${tipo2}`);
+                            //throw new Error(`Raiz Invalida entre ${tipo1} y ${tipo2}`);
+                            throw agregarError(new Error_(`Raiz Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
                     }
                 // DECIMAL
                 case TipoDato.DECIMAL:
@@ -375,10 +414,12 @@ export class Aritmetica extends Expresion {
                         case TipoDato.DECIMAL:
                             return { valor: Math.pow(parseFloat(exp1.valor), 1 / parseFloat(exp2.valor)), tipoDato: TipoDato.DECIMAL };
                         default:
-                            throw new Error(`Raiz Invalida entre ${tipo1} y ${tipo2}`);
+                            //throw new Error(`Raiz Invalida entre ${tipo1} y ${tipo2}`);
+                            throw agregarError(new Error_(`Raiz Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
                     }
                 default:
-                    throw new Error(`Raiz Invalida entre ${tipo1} y ${tipo2}`);
+                    //throw new Error(`Raiz Invalida entre ${tipo1} y ${tipo2}`);
+                    throw agregarError(new Error_(`Raiz Invalida entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
             }
 
         }
@@ -398,7 +439,8 @@ export class Aritmetica extends Expresion {
                         case TipoDato.DECIMAL:
                             return { valor: parseFloat(exp1.valor) % parseFloat(exp2.valor), tipoDato: TipoDato.DECIMAL };
                         default:
-                            throw new Error(`Modulo Invalido entre ${tipo1} y ${tipo2}`);
+                            //throw new Error(`Modulo Invalido entre ${tipo1} y ${tipo2}`);
+                            throw agregarError(new Error_(`Modulo Invalido entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
                     }
                 // DECIMAL
                 case TipoDato.DECIMAL:
@@ -410,13 +452,73 @@ export class Aritmetica extends Expresion {
                         case TipoDato.DECIMAL:
                             return { valor: parseFloat(exp1.valor) % parseFloat(exp2.valor), tipoDato: TipoDato.DECIMAL };
                         default:
-                            throw new Error(`Modulo Invalido entre ${tipo1} y ${tipo2}`);
+                            //throw new Error(`Modulo Invalido entre ${tipo1} y ${tipo2}`);
+                            throw agregarError(new Error_(`Modulo Invalido entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
                     }
                 default:
-                    throw new Error(`Modulo Invalido entre ${tipo1} y ${tipo2}`);
+                    //throw new Error(`Modulo Invalido entre ${tipo1} y ${tipo2}`);
+                    throw agregarError(new Error_(`Modulo Invalido entre ${tipo1} y ${tipo2}`, this.linea, this.columna, TipoError.SEMANTICO));
             }
         }
         return { valor: null, tipoDato: TipoDato.NULO }
+    }
+
+
+    public getAST(anterior: string): string {
+        let contador = Contador.getInstancia();
+        let resultado = "";
+    
+        if (this.operador === OpAritmetico.NEGACION) {
+            let nodoNegacion = `n${contador.get()}`;
+            let nodoExp = `n${contador.get()}`;
+            resultado += `${nodoNegacion}[label="-"];\n`;
+            resultado += `${nodoExp}[label="EXPRESION ARITMETICA"];\n`;
+            resultado += `${anterior} -> ${nodoNegacion};\n`;
+            resultado += `${anterior} -> ${nodoExp};\n`;
+            resultado += this.operador1.getAST(nodoExp);
+            return resultado;
+        }
+    
+        let nodoExp1 = `n${contador.get()}`;
+        let nodoOperacion = `n${contador.get()}`;
+        let nodoExp2 = `n${contador.get()}`;
+    
+        resultado += `${nodoExp1}[label="EXPRESION ARITMETICA"];\n`;
+    
+        switch (this.operador) {
+            case OpAritmetico.SUMA:
+                resultado += `${nodoOperacion}[label="+"];\n`;
+                break;
+            case OpAritmetico.RESTA:
+                resultado += `${nodoOperacion}[label="-"];\n`;
+                break;
+            case OpAritmetico.PRODUCTO:
+                resultado += `${nodoOperacion}[label="*"];\n`;
+                break;
+            case OpAritmetico.DIVISION:
+                resultado += `${nodoOperacion}[label="/"];\n`;
+                break;
+            case OpAritmetico.POTENCIA:
+                resultado += `${nodoOperacion}[label="^"];\n`;
+                break;
+            case OpAritmetico.RAIZ:
+                resultado += `${nodoOperacion}[label="$"];\n`;
+                break;
+            case OpAritmetico.MODULO:
+                resultado += `${nodoOperacion}[label="%"];\n`;
+                break;
+            default:
+                throw new Error("Operador aritmético no reconocido");
+        }
+    
+        resultado += `${nodoExp2}[label="EXPRESION ARITMETICA"];\n`;
+        resultado += `${anterior} -> ${nodoExp1};\n`;
+        resultado += `${anterior} -> ${nodoOperacion};\n`;
+        resultado += `${anterior} -> ${nodoExp2};\n`;
+        resultado += this.operador1.getAST(nodoExp1);
+        resultado += this.operador2.getAST(nodoExp2);
+    
+        return resultado;
     }
 
 }

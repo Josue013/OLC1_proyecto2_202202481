@@ -25,7 +25,7 @@ export class Simbolo {
         if (v.tipoDato !== this.tipoDato) {
             throw new Error("Verificar tipos de dato en la asignación de: " + this.id);
         }
-        console.log(`Asignando valor ${v.valor} a la variable ${this.id}`);
+        //console.log(`Asignando valor ${v.valor} a la variable ${this.id}`);
         this.valor = v.valor;
     }
 

@@ -4,10 +4,11 @@ export type Resultado = {
 }
 
 export enum TipoDato{
-    ENTERO,
-    DECIMAL,
-    BOOLEANO,
-    CHAR,
-    STRING,
-    NULO
+    ENTERO, // 0
+    DECIMAL, // 1
+    BOOLEANO, // 2
+    CHAR, // 3
+    STRING, // 4
+    NULO, // 5
+    ID // 6
 }

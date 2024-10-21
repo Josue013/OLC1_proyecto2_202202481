@@ -9,4 +9,5 @@ var TipoDato;
     TipoDato[TipoDato["CHAR"] = 3] = "CHAR";
     TipoDato[TipoDato["STRING"] = 4] = "STRING";
     TipoDato[TipoDato["NULO"] = 5] = "NULO";
+    TipoDato[TipoDato["ID"] = 6] = "ID"; // 6
 })(TipoDato || (exports.TipoDato = TipoDato = {}));

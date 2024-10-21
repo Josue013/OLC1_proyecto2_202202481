@@ -71,6 +71,22 @@ function Index() {
         link.click();
     }
 
+    // Abrir Reporte de Errores html en una nueva ventana con Edge
+    const handleOpenReportClick = () => {
+        fetch('http://localhost:3000/open-report')
+            .then(response => response.text())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Abrir Reporte de AST en formato pdf en una nueva ventana con Brave
+    const handleOpenASTClick = () => {
+        fetch('http://localhost:3000/open-ast')
+            .then(response => response.text())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+    }
+
     return (
         <>
             <div className="item-0">
@@ -92,9 +108,9 @@ function Index() {
                         <div className="dropdown">
                             <button className="button-74" role="button">Reportes</button>
                             <div className="dropdown-content">
-                                <button className="button-75" role="button" onClick={handleNewFileClick}>Errores</button>
+                                <button className="button-75" role="button" onClick={handleOpenReportClick}>Errores</button>
                                 <button className="button-75" role="button" onClick={handleSaveClick}>Símbolos</button>
-                                <button className="button-75" role="button" onClick={handleLoadClick}>AST</button>
+                                <button className="button-75" role="button" onClick={handleOpenASTClick}>AST</button>
                             </div>
                         </div>
                     </div>

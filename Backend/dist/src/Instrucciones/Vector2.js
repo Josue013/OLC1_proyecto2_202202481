@@ -4,6 +4,9 @@ exports.Vector2 = void 0;
 const Tipos_1 = require("../Expresiones/Tipos");
 const Expresion_1 = require("../Expresiones/Expresion");
 const Instruccion_1 = require("./Instruccion");
+const Errores_1 = require("../Error/Errores_");
+const Errores_2 = require("../Error/Errores_");
+const AST_1 = require("../AST/AST");
 class Vector2 extends Instruccion_1.Instruccion {
     constructor(id, tipo, valor, line, column, bandera) {
         super(line, column);
@@ -39,7 +42,8 @@ class Vector2 extends Instruccion_1.Instruccion {
                 valorPredeterminado = "";
                 break;
             default:
-                throw new Error(`Tipo ${this.tipo} no permitido para la declaración de vectores`);
+                //throw new Error(`Tipo ${this.tipo} no permitido para la declaración de vectores`);
+                throw (0, AST_1.agregarError)(new Errores_1.Error_(`Tipo ${this.tipo} no permitido para la declaración de vectores`, this.linea, this.columna, Errores_2.TipoError.SEMANTICO));
         }
         // Guardar el vector en el entorno
         if (this.bandera && !(this.valor instanceof Expresion_1.Expresion)) {
@@ -59,12 +63,14 @@ class Vector2 extends Instruccion_1.Instruccion {
                         (_b = entorno.obtenerArreglo(this.id[0])) === null || _b === void 0 ? void 0 : _b.asignarValor(i, 0, this.id[0], tipoDominante, valor.valor, this.linea, this.columna);
                     }
                     else {
-                        throw new Error(`Tipo de dato ${valor.tipoDato} no asignable a ${tipoDominante}`);
+                        //throw new Error(`Tipo de dato ${valor.tipoDato} no asignable a ${tipoDominante}`);
+                        throw (0, AST_1.agregarError)(new Errores_1.Error_(`Tipo de dato ${valor.tipoDato} no asignable a ${tipoDominante}`, this.linea, this.columna, Errores_2.TipoError.SEMANTICO));
                     }
                 }
             }
             else {
-                throw new Error(`El vector ${this.id} no puede ser de dos dimensiones`);
+                //throw new Error(`El vector ${this.id} no puede ser de dos dimensiones`);
+                throw (0, AST_1.agregarError)(new Errores_1.Error_(`El vector ${this.id} no puede ser de dos dimensiones`, this.linea, this.columna, Errores_2.TipoError.SEMANTICO));
             }
         }
         else if (!(this.valor instanceof Expresion_1.Expresion)) {
@@ -86,7 +92,8 @@ class Vector2 extends Instruccion_1.Instruccion {
                             (_d = entorno.obtenerArreglo(this.id[0])) === null || _d === void 0 ? void 0 : _d.asignarValor(i, j, this.id[0], tipoDominante, valor.valor, this.linea, this.columna);
                         }
                         else {
-                            throw new Error(`Tipo de dato ${valor.tipoDato} no asignable a ${tipoDominante}`);
+                            //throw new Error(`Tipo de dato ${valor.tipoDato} no asignable a ${tipoDominante}`);
+                            throw (0, AST_1.agregarError)(new Errores_1.Error_(`Tipo de dato ${valor.tipoDato} no asignable a ${tipoDominante}`, this.linea, this.columna, Errores_2.TipoError.SEMANTICO));
                         }
                     }
                 }
@@ -105,10 +112,15 @@ class Vector2 extends Instruccion_1.Instruccion {
                     (_e = entorno.obtenerArreglo(this.id[0])) === null || _e === void 0 ? void 0 : _e.asignarValor(i, 0, this.id[0], tipoDominante, valor.valor, this.linea, this.columna);
                 }
                 else {
-                    throw new Error(`Tipo de dato ${valor.tipoDato} no asignable a ${tipoDominante}`);
+                    //throw new Error(`Tipo de dato ${valor.tipoDato} no asignable a ${tipoDominante}`);
+                    throw (0, AST_1.agregarError)(new Errores_1.Error_(`Tipo de dato ${valor.tipoDato} no asignable a ${tipoDominante}`, this.linea, this.columna, Errores_2.TipoError.SEMANTICO));
                 }
             }
         }
+    }
+    /* LET ID : TIPO ([] | [][]) = LISTAVALORES */
+    getAST(anterior) {
+        return "";
     }
 }
 exports.Vector2 = Vector2;

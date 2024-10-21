@@ -12,3 +12,4 @@ export const analisis = async (value) => {
   const { data } = await instance.post('/interpretar', { value });
   return data;
 }
+

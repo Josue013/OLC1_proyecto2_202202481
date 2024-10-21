@@ -8,6 +8,7 @@ class Entorno {
         this.entornoPadre = entornoPadre;
         this.variables = new Map();
         this.arreglos = new Map();
+        this.funciones = new Map();
     }
     // imprimir arreglos en el map
     imprimirArreglos() {
@@ -17,11 +18,27 @@ class Entorno {
         });
         console.log("===============================================");
     }
+    // imprimir funciones en el map
+    imprimirFunciones() {
+        console.log("============= IMPRIMIENDO FUNCIONES =============");
+        this.funciones.forEach((funcion, key) => {
+            console.log(key, funcion);
+        });
+        console.log("===============================================");
+    }
     // guardar variable
     guardarVariable(id, valor, tipoDato, esConstante, linea, columna) {
-        const simbolo = new Simbolo_1.Simbolo(id, valor, tipoDato, esConstante, linea, columna);
-        if (this.variables.has(id))
+        let entorno = this;
+        if (entorno.variables.has(id)) {
             throw Error("Esta variable ya existe");
+        }
+        else if (entorno.arreglos.has(id)) {
+            throw Error("Este ID es un arreglo");
+        }
+        else if (entorno.funciones.has(id)) {
+            throw Error("Este ID es una función");
+        }
+        const simbolo = new Simbolo_1.Simbolo(id, valor, tipoDato, esConstante, linea, columna);
         this.variables.set(id, simbolo);
     }
     // actualizar variable
@@ -64,6 +81,9 @@ class Entorno {
         else if (this.variables.has(id)) {
             throw new Error("Este ID es una variable");
         }
+        else if (this.funciones.has(id)) {
+            throw new Error("Este ID es una función");
+        }
         let arreglo = new arreglos_1.Arreglo(id, tipo, filas, columnas, linea, columna);
         this.arreglos.set(id, arreglo);
     }
@@ -73,6 +93,39 @@ class Entorno {
             throw new Error("Este arreglo no existe");
         }
         this.arreglos.set(id, arreglo);
+    }
+    // guardar funcion
+    guardarFuncion(id, funcion) {
+        let entorno = this;
+        if (entorno.funciones.has(id)) {
+            throw new Error("Esta función ya existe");
+        }
+        else if (entorno.variables.has(id)) {
+            throw new Error("Este ID es una variable");
+        }
+        else if (entorno.arreglos.has(id)) {
+            throw new Error("Este ID es un arreglo");
+        }
+        this.funciones.set(id, funcion);
+    }
+    // obtener funcion
+    obtenerFuncion(id) {
+        let entorno = this;
+        while (entorno != null) {
+            if (entorno.funciones.has(id)) {
+                return entorno.funciones.get(id);
+            }
+            entorno = entorno.entornoPadre;
+        }
+        return undefined;
+    }
+    // obtener entorno global
+    obtenerEntornoGlobal() {
+        let entorno = this;
+        while ((entorno === null || entorno === void 0 ? void 0 : entorno.entornoPadre) != null) {
+            entorno = entorno.entornoPadre;
+        }
+        return entorno;
     }
 }
 exports.Entorno = Entorno;
