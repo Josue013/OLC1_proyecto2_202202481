@@ -1,0 +1,208 @@
+<ini> ::= <instrucciones> EOF
+
+<instrucciones> ::= <instrucciones> <instruccion>
+                  | <instruccion>
+
+<instruccion> ::= <funciones>
+                | <Variables> PYC
+                | <incremento_y_decremento> PYC
+                | <vectores> PYC
+                | <inst_break> PYC
+                | <inst_continue> PYC
+                | <inst_return> PYC
+                | <subrutinas>
+                | <ejecutar>
+
+<ejecutar> ::= EJECUTAR <llamada1> PYC
+
+<Variables> ::= <declaracion>
+              | <asignacion_var>
+
+<declaracion> ::= LET <lista_var> DOSPUNTOS <TIPO> <var_exp>
+                | CONST <lista_var> DOSPUNTOS <TIPO> <var_exp>
+
+<var_exp> ::= 
+            :
+            | IGUAL <expresion>
+
+<lista_var> ::= <lista_var> COMA ID
+              | ID
+
+<asignacion_var> ::= ID IGUAL <expresion>
+
+<expresion> ::= RESTA <expresion>
+              | <expresion> MAS <expresion>
+              | <expresion> RESTA <expresion>
+              | <expresion> PRODUCTO <expresion>
+              | <expresion> DIV <expresion>
+              | <expresion> POTENCIA <expresion>
+              | <expresion> RAIZ <expresion>
+              | <expresion> MODULO <expresion>
+              | <relacional>
+              | <logicos>
+              | <tipo_datos>
+              | ID
+              | PIZQ <expresion> PDER
+              | <casteos>
+              | <ternario>
+              | <acceso_vector>
+              | <llamada1>
+              | <funcionesNativas>
+
+<relacional> ::= <expresion> IGUALDAD <expresion>
+               | <expresion> DISTINTO <expresion>
+               | <expresion> MENOR <expresion>
+               | <expresion> MENORIGUAL <expresion>
+               | <expresion> MAYOR <expresion>
+               | <expresion> MAYORIGUAL <expresion>
+
+<logicos> ::= <expresion> AND <expresion>
+            | <expresion> OR <expresion>
+            | NOT <expresion>
+
+<ternario> ::= IF PIZQ <expresion> PDER <expresion> DOSPUNTOS <expresion>
+
+<tipo_datos> ::= NUMBER
+               | DOUBLE
+               | STRING
+               | CHAR
+               | TRUE
+               | FALSE
+               | NULL
+
+<casteos> ::= CAST PIZQ <expresion> AS <TIPO> PDER
+
+<incremento_y_decremento> ::= ID INCREMENTO
+                            | ID DECREMENTO
+
+<vectores> ::= <declaracion_vectores>
+             | <modificar_vector>
+
+<declaracion_vectores> ::= LET <lista_var> DOSPUNTOS <TIPO> CIZQ CDER IGUAL NEW VECTOR <TIPO> CIZQ <expresion> CDER
+                         | LET <lista_var> DOSPUNTOS <TIPO> CIZQ CDER CIZQ CDER IGUAL NEW VECTOR <TIPO> CIZQ <expresion> CDER CIZQ <expresion> CDER
+                         | LET <lista_var> DOSPUNTOS <TIPO> CIZQ CDER IGUAL <asignacion_vector>
+                         | LET <lista_var> DOSPUNTOS <TIPO> CIZQ CDER CIZQ CDER IGUAL CIZQ <lista_de_lista_valores> CDER
+
+<asignacion_vector> ::= <tochararray>
+                      | CIZQ <lista_valores> CDER
+
+<lista_de_lista_valores> ::= <lista_de_lista_valores> COMA CIZQ <lista_valores> CDER
+                           | CIZQ <lista_valores> CDER
+
+<lista_valores> ::= <lista_valores> COMA <expresion>
+                  | <expresion>
+
+<acceso_vector> ::= ID CIZQ <expresion> CDER
+                  | ID CIZQ <expresion> CDER CIZQ <expresion> CDER
+
+<modificar_vector> ::= ID CIZQ <expresion> CDER IGUAL <expresion>
+                     | ID CIZQ <expresion> CDER CIZQ <expresion> CDER IGUAL <expresion>
+
+<funciones> ::= <fn_echo> PYC
+              | <fn_if>
+              | <Switch>
+              | <ciclo_while>
+              | <ciclo_for>
+              | <ciclo_do_until>
+              | <ciclo_loop>
+
+<fn_echo> ::= ECHO <expresion>
+
+<fn_if> ::= IF PIZQ <expresion> PDER <bloque>
+          | IF PIZQ <expresion> PDER <bloque> ELSE <bloque>
+          | IF PIZQ <expresion> PDER <bloque> ELSE <fn_if>
+
+<bloque> ::= LLIZQ <instrucciones> LLDER
+           | LLIZQ LLDER
+
+<Switch> ::= SWITCH PIZQ <expresion> PDER LLIZQ <case> <default> LLDER
+
+<case> ::= <lista_casos>
+         | 
+
+<lista_casos> ::= <lista_casos> <casos>
+                | <casos>
+
+<casos> ::= CASE <expresion> DOSPUNTOS <instrucciones>
+
+<default> ::= DEFAULT DOSPUNTOS <instrucciones>
+            | 
+
+<ciclo_while> ::= WHILE PIZQ <expresion> PDER <bloque>
+
+<inst_break> ::= BREAK
+
+<inst_continue> ::= CONTINUE
+
+<inst_return> ::= RETURN <expresion>
+                | RETURN
+
+<ciclo_for> ::= FOR PIZQ <Variables> PYC <expresion> PYC <actualizacion_variables> PDER <bloque>
+
+<actualizacion_variables> ::= <incremento_y_decremento>
+                            | <asignacion_var>
+
+<ciclo_do_until> ::= DO <bloque> UNTIL PIZQ <expresion> PDER PYC
+
+<ciclo_loop> ::= LOOP <bloque>
+
+<subrutinas> ::= <declaracion_funciones>
+               | <Metodos>
+               | <llamada1> PYC
+
+<declaracion_funciones> ::= FUNCTION <TIPO> ID PIZQ <casos_parametros> PDER <bloque>
+
+<Metodos> ::= FUNCTION VOID ID PIZQ <casos_parametros> PDER <bloque>
+
+<llamada1> ::= ID PIZQ <casos_parametros2> PDER
+
+<llamada2> ::= ID PIZQ <casos_parametros2> PDER
+
+<lista_valores_funcions> ::= 
+                           :
+                           | <lista_valores>
+
+<casos_parametros> ::= 
+                     :
+                     | <parametros>
+
+<parametros> ::= <parametros> COMA <parametro>
+               | <parametro>
+
+<parametro> ::= ID DOSPUNTOS <TIPO> IGUAL <expresion>
+              | ID DOSPUNTOS <TIPO>
+              | ID DOSPUNTOS <TIPO> CIZQ CDER
+              | ID DOSPUNTOS <TIPO> CIZQ CDER CIZQ CDER
+
+<casos_parametros2> ::= 
+                      :
+                      | <parametros_2>
+
+<parametros_2> ::= <parametros_2> COMA <parametro_2>
+                 | <parametro_2>
+
+<parametro_2> ::= ID IGUAL <expresion>
+
+<funcionesNativas> ::= <lower>
+                     | <upper>
+                     | <round>
+                     | <len>
+                     | <truncate>
+                     | <ls>
+                     | <tostring>
+
+<lower> ::= LOWER PIZQ <expresion> PDER
+
+<upper> ::= UPPER PIZQ <expresion> PDER
+
+<round> ::= ROUND PIZQ <expresion> PDER
+
+<len> ::= LEN PIZQ <expresion> PDER
+
+<truncate> ::= TRUNCATE PIZQ <expresion> PDER
+
+<ls> ::= <expresion> IS <TIPO>
+
+<tostring> ::= TOSTRING PIZQ <expresion> PDER
+
+<tochararray> ::= TOCHARARRAY PIZQ <expresion> PDER

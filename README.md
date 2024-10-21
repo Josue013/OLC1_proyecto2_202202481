@@ -19,7 +19,7 @@
 
 # [MANUAL TECNICO](src/Documentacion/ManualTecnico.pdf)    <------------------- 👀👀👀
 # [MANUAL USUARIO](Documentacion/ManualUsuario.pdf)    <------------------- 👀👀👀
-# [GRAMATICA](src/Documentacion/Gramatica.txt)    <------------------- 👀👀👀
+# [GRAMATICA](Documentacion/Gramatica.txt)    <------------------- 👀👀👀
 
 
 <p align="center">
