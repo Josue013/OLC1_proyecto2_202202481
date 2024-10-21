@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AST = void 0;
+exports.AST = exports.simbolos = void 0;
 exports.imprimir = imprimir;
 exports.agregarError = agregarError;
 const Contador_1 = __importDefault(require("../Entorno/Contador"));
@@ -44,6 +44,7 @@ const AccesoVector_1 = require("../Expresiones/AccesoVector");
 const Acceso_1 = require("../Expresiones/Acceso");
 let consola = "";
 let errores = [];
+exports.simbolos = [];
 let AstDot;
 class AST {
     constructor(instrucciones, errorS) {
@@ -89,6 +90,7 @@ class AST {
         console.log(errores.toString());
         this.generarReporteErrores();
         this.generarReporteAST();
+        this.generarReporteSimbolos();
         return consola;
     }
     generarReporteAST() {
@@ -108,6 +110,55 @@ class AST {
             }
             console.log(`PDF generado correctamente en ${pdfPath}`);
         });
+    }
+    generarReporteSimbolos() {
+        let htmlContent = `<html>
+        <head>
+            <title>Reporte de Símbolos</title>
+            <style>
+                table {
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+                th, td {
+                    border: 1px solid black;
+                    padding: 8px;
+                    text-align: left;
+                }
+                th {
+                    background-color: #f2f2f2;
+                }
+                tr:nth-child(even) {
+                    background-color: #f2f2f2;
+                }
+            </style>
+        </head>
+        <body>
+            <h2>Reporte de Símbolos</h2>
+            <table>
+                <tr>
+                    <th>#</th>
+                    <th>ID</th>
+                    <th>Tipo</th>
+                    <th>Tipo2</th>
+                    <th>Línea</th>
+                    <th>Columna</th>
+                </tr>`;
+        exports.simbolos.forEach((simbolo, index) => {
+            htmlContent += `<tr>
+                <td>${index + 1}</td>
+                <td>${simbolo.id}</td>
+                <td>${simbolo.tipo}</td>
+                <td>${simbolo.tipo2}</td>
+                <td>${simbolo.linea}</td>
+                <td>${simbolo.columna}</td>
+            </tr>`;
+        });
+        htmlContent += `</table>
+        </body>
+        </html>`;
+        console.log("generando reporte de símbolos");
+        fs.writeFileSync('C:/Users/PC/Desktop/PROYECTO2/OLC1_Proyecto2_202202481/FRONTEND/public/Simbolos.html', htmlContent, 'utf8');
     }
     generarReporteErrores() {
         let htmlContent = `<html>

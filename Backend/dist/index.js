@@ -32,7 +32,6 @@ app.post('/interpretar', (req, res) => {
     const ast = gramatica.parse(parametro); // Retorno de init
     console.log(ast);
     const retorno = ast.interpretar();
-    //Errores = ast.generarReporteHTML()
     res.json({ "mensaje": retorno });
 });
 // Nuevo endpoint para generar y abrir el reporte del AST
@@ -48,6 +47,18 @@ app.get('/open-ast', (req, res) => {
         res.send('Archivo AST abierto con Brave');
     });
 });
+// Nuevo endpoint para abrir el reporte de símbolos
+app.get('/open-symbols', (req, res) => {
+    const filePath = path.join(__dirname, '../../FRONTEND/public/Simbolos.html');
+    exec(`start brave "${filePath}"`, (err) => {
+        if (err) {
+            console.error('Error al abrir el archivo con Brave:', err);
+            return res.status(500).send('Error al abrir el archivo con Brave');
+        }
+        res.send('Archivo de símbolos abierto con Brave');
+    });
+});
+// Nuevo endpoint para abrir el reporte de errores
 app.get('/open-report', (req, res) => {
     const filePath = path.join(__dirname, '../../FRONTEND/public/Errores.html');
     exec(`start brave "${filePath}"`, (err) => {

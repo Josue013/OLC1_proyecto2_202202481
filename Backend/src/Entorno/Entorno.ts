@@ -1,7 +1,9 @@
-import { Resultado, TipoDato } from "../Expresiones/Tipos";
+import { getDataTypeName, Resultado, TipoDato } from "../Expresiones/Tipos";
 import { Simbolo } from "./Simbolo";
 import { Arreglo } from "./arreglos";
 import { Funcion } from "../Instrucciones/Funcion";
+import { TablaSimbolos } from "../Error/TablaSimbolos";
+import { simbolos } from "../AST/AST";
 
 export class Entorno {
     public variables: Map<string, Simbolo>;
@@ -46,6 +48,15 @@ export class Entorno {
         }
         const simbolo = new Simbolo(id,valor,tipoDato,esConstante,linea,columna)
         this.variables.set(id,simbolo)
+
+        let nuevoSimbolo = new TablaSimbolos(simbolos.length + 1, id, getDataTypeName(tipoDato), "Variable", linea, columna);
+
+        let aux = simbolos.some((element) => element.tipo === nuevoSimbolo.tipo && element.tipo2 === nuevoSimbolo.tipo2 && element.linea === nuevoSimbolo.linea && element.columna === nuevoSimbolo.columna);
+
+        if(!aux){
+            simbolos.push(nuevoSimbolo);
+        }
+
     }
 
     // actualizar variable
@@ -97,6 +108,15 @@ export class Entorno {
 
         let arreglo = new Arreglo(id, tipo, filas, columnas, linea, columna);
         this.arreglos.set(id, arreglo);
+
+        let nuevoSimbolo = new TablaSimbolos(simbolos.length + 1, id, getDataTypeName(tipo), "Vector", linea, columna);
+
+        let aux = simbolos.some((element) => element.tipo === nuevoSimbolo.tipo && element.tipo2 === nuevoSimbolo.tipo2 && element.linea === nuevoSimbolo.linea && element.columna === nuevoSimbolo.columna);
+
+        if(!aux){
+            simbolos.push(nuevoSimbolo);
+        }
+
     }
 
     // actualizar arreglo
@@ -119,6 +139,15 @@ export class Entorno {
             throw new Error("Este ID es un arreglo");
         }
         this.funciones.set(id, funcion);
+
+        let nuevoSimbolo = new TablaSimbolos(simbolos.length + 1, id, getDataTypeName(funcion.tipoDato), "Funcion", funcion.linea, funcion.columna);
+
+        let aux = simbolos.some((element) => element.tipo === nuevoSimbolo.tipo && element.tipo2 === nuevoSimbolo.tipo2 && element.linea === nuevoSimbolo.linea && element.columna === nuevoSimbolo.columna);
+
+        if(!aux){
+            simbolos.push(nuevoSimbolo);
+        }
+
     }
 
     // obtener funcion

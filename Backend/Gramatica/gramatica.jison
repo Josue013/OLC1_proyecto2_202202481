@@ -274,7 +274,7 @@ instruccion
             | inst_return PYC                   {$$ = $1;}
             | subrutinas                        {$$ = $1;}
             | ejecutar                          {$$ = $1;}
-            | error         {errores.push(new Error_(yytext, @1.first_line, @1.first_column, TipoError.SINTACTICO));}
+            | error PYC        {errores.push(new Error_(yytext, @1.first_line, @1.first_column, TipoError.SINTACTICO));}
 ;
 
 // ================ Ejecutar ===================

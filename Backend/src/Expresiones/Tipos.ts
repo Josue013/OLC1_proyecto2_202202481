@@ -12,3 +12,7 @@ export enum TipoDato{
     NULO, // 5
     ID // 6
 }
+
+export function getDataTypeName(value: TipoDato): string {
+    return TipoDato[value];
+}
