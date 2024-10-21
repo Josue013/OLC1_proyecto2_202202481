@@ -17,6 +17,11 @@
 
 ---
 
+# [MANUAL TECNICO](src/Documentacion/ManualTecnico.pdf)    <------------------- 👀👀👀
+# [MANUAL USUARIO](Documentacion/ManualUsuario.pdf)    <------------------- 👀👀👀
+# [GRAMATICA](src/Documentacion/Gramatica.txt)    <------------------- 👀👀👀
+
+
 <p align="center">
   <a href="#"><img src="https://i.pinimg.com/originals/1a/ef/79/1aef79b84a78c4f2600408f77a49ba7a.gif" width="800px"/></a>
 </p>
