@@ -17,7 +17,7 @@
 
 ---
 
-# [MANUAL TECNICO](src/Documentacion/ManualTecnico.pdf)    <------------------- 👀👀👀
+# [MANUAL TECNICO](Documentacion/ManualTecnico.pdf)    <------------------- 👀👀👀
 # [MANUAL USUARIO](Documentacion/ManualUsuario.pdf)    <------------------- 👀👀👀
 # [GRAMATICA](Documentacion/Gramatica.txt)    <------------------- 👀👀👀
 
